@@ -1,9 +1,18 @@
 <template>
   <div id="app">
-    app
+    {{this.$store.state.name}}
     <router-view />
   </div>
 </template>
+
+<script>
+export default {
+  mounted() {
+    this.$store.dispatch("getTest",1);
+  }
+};
+</script>
+
 
 <style>
 #app {
