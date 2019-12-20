@@ -9,13 +9,13 @@
           <span class="item_brande" v-if="item.brande">{{item.brande}}</span>
           <span class="item_coupon" v-if="item.coupon">{{item.coupon}}元券</span>
           <div class="shop_recommend_item_detail_inner">
-            <span class="shop_recommend_item_detail_str">{{item.detail_str}}</span>
+            <span class="shop_recommend_item_detail_str">{{item.detail}}</span>
           </div>
-          <span class="shop_recommend_item_detail_sold">{{item.detail_sold}}</span>
+          <span class="shop_recommend_item_detail_sold">{{item.sold}}</span>
         </div>
       </router-link>
       <div class="shop_recommend_item_detail_price">
-        <span>￥{{item.detail_price}}</span>
+        <span>￥{{item.price}}</span>
         <mt-palette-button
           content="+"
           @expand.native="main_log('expand')"
@@ -51,9 +51,9 @@ export default {
       //       link: "/",
       //       img_url: "",
       //       brande: "蓝月亮"
-      //       detail_str: "小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼",
+      //       detail: "小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼",
       //       detail_sold: "月售111 好评率:99%",
-      //       detail_price: "19.99"
+      //       price: "19.99"
       //     }
       //   ]
     };
@@ -122,6 +122,7 @@ export default {
   height: 250px;
   overflow: hidden;
   padding: 5px;
+  margin: 5px;
   border: #e0dcdc 2px solid;
 }
 .shop_recommend_item_detail {

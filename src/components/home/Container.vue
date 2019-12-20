@@ -26,28 +26,7 @@
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="10"
     >
-      <div
-        class="home_container_favorite_item"
-        v-for="(item, index) in container_favorite"
-        :key="index"
-      >
-        <router-link to="/" class="home_container_favorite_item_link">
-          <div class="home_container_favorite_item_img">
-            <img src="./images/favorite.png" :alt="item.brande" />
-          </div>
-          <div class="home_container_favorite_item_tips">
-            <div class="home_container_favorite_item_brande">
-              <span>{{item.brande}}</span>
-            </div>
-            <div class="home_container_favorite_item_detail">
-              <span>{{item.detail}}</span>
-            </div>
-            <div class="home_container_favorite_item_price">
-              <span>￥{{item.price}}</span>
-            </div>
-          </div>
-        </router-link>
-      </div>
+      <Sold class="home_container_favorite_item" :shop_recommend_list="container_favorite" />
       <div class="container_loading">
         <mt-spinner type="triple-bounce"></mt-spinner>
       </div>
@@ -61,7 +40,11 @@
     //       brande:'蓝月亮'
     //       detail:'蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装'
 <script>
+import Sold from "../Sold";
 export default {
+  components: {
+    Sold
+  },
   data() {
     return {
       container_nav_list: [
@@ -108,45 +91,75 @@ export default {
       container_favorite: [
         {
           img_url: "./images/swipe.png",
-          link_url: "/",
+          link: "/",
           price: 11.8,
+          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
           brande: "蓝月亮",
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装"
+          sold: "月售111 好评率:99%",
+          coupon: 10
         },
         {
           img_url: "./images/swipe.png",
-          link_url: "/",
+          link: "/",
           price: 11.8,
+          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
           brande: "蓝月亮",
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装"
+          sold: "月售111 好评率:99%",
+          coupon: 10
         },
         {
           img_url: "./images/swipe.png",
-          link_url: "/",
+          link: "/",
           price: 11.8,
+          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
           brande: "蓝月亮",
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装"
+          sold: "月售111 好评率:99%",
+          coupon: 10
         },
         {
           img_url: "./images/swipe.png",
-          link_url: "/",
+          link: "/",
           price: 11.8,
+          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
           brande: "蓝月亮",
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装"
+          sold: "月售111 好评率:99%",
+          coupon: 10
         },
         {
           img_url: "./images/swipe.png",
-          link_url: "/",
+          link: "/",
           price: 11.8,
+          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
           brande: "蓝月亮",
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装"
+          sold: "月售111 好评率:99%",
+          coupon: 10
         },
         {
           img_url: "./images/swipe.png",
-          link_url: "/",
+          link: "/",
           price: 11.8,
+          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
           brande: "蓝月亮",
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装"
+          sold: "月售111 好评率:99%",
+          coupon: 10
+        },
+        {
+          img_url: "./images/swipe.png",
+          link: "/",
+          price: 11.8,
+          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
+          brande: "蓝月亮",
+          sold: "月售111 好评率:99%",
+          coupon: 10
+        },
+        {
+          img_url: "./images/swipe.png",
+          link: "/",
+          price: 11.8,
+          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
+          brande: "蓝月亮",
+          sold: "月售111 好评率:99%",
+          coupon: 10
         }
       ],
       loading: false
@@ -154,21 +167,23 @@ export default {
   },
   methods: {
     loadMore() {
-      this.loading = true;
-      setTimeout(() => {
-        // let last = this.container_favorite[this.container_favorite.length - 1];
-        // for (let i = 1; i <= 4; i++) {
-        //   this.container_favorite.push({
-        //     img_url: "./images/swipe.png",
-        //     link_url: "/",
-        //     price: 11.8,
-        //     brande: "蓝月亮",
-        //     detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装"
-        //   });
-        // }
-        alert("加载了");
-        this.loading = false;
-      }, 2500);
+      // this.loading = true;
+      // setTimeout(() => {
+      //   let last = this.container_favorite[this.container_favorite.length - 1];
+      //   for (let i = 1; i <= 4; i++) {
+      //     this.container_favorite.push({
+      //       link: "/",
+      //       img_url: "",
+      //       detail:
+      //         "小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍111111111111111111111111111111111111111鱼小鲍鱼",
+      //       sold: "月售111 好评率:99%",
+      //       price: "19.99",
+      //       brande: "蓝月亮",
+      //       coupon: 10
+      //     });
+      //   }
+      //   this.loading = false;
+      // }, 2500);
     }
   }
 };
@@ -224,12 +239,14 @@ export default {
 }
 .home_container_favorite_item {
   /* border: 1px solid rgb(221, 217, 217); */
-  box-shadow: 0px 0px 5px rgb(221, 217, 217);
+  /* box-shadow: 0px 0px 5px rgb(221, 217, 217);
   flex: 0 1 45%;
   padding: 5px 0px;
-  margin: 5px 0;
+  margin: 5px 0; */
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
   align-items: center;
 }
 .home_container_favorite_item_img img {
