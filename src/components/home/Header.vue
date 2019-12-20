@@ -82,6 +82,7 @@ export default {
   left: 0;
   background-color: red;
   position: fixed;
+  z-index: 9;
   transition: all 0.3s linear;
 }
 .logo {
@@ -92,14 +93,12 @@ export default {
   align-items: center;
   justify-content: center;
   top: 0;
-  z-index: 1;
   margin-left: 0px;
   z-index: -1;
   transition: all 0.3s linear;
 }
 .img {
   position: relative;
-  z-index: 999;
 }
 .logoSmall {
   transform: scale(0) translateY(-11px);

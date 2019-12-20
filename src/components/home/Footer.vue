@@ -1,5 +1,7 @@
 <template>
-  <div class="home_footer"></div>
+  <div class="home_footer">
+    
+  </div>
 </template>
 
 
@@ -8,9 +10,5 @@ export default {};
 </script>
 
 <style scoped>
-/* .home_footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-} */
+
 </style>

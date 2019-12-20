@@ -1,18 +1,26 @@
 <template>
-  <div class="shop_container">
-    <div class="shop_recommend">
-      <Sold :shop_recommend_list="shop_recommend_list" />
+  <div class="shop">
+    <p>商家推荐</p>
+    <div class="shop_container">
+      <div class="shop_recommend">
+        <Sold :shop_recommend_list="shop_recommend_list" />
+      </div>
     </div>
-    <div class="shop_list"></div>
+    <div class="shop_list">
+      <p>热销</p>
+      <SoldList class="shop_list_inner" />
+    </div>
   </div>
 </template>
 
 
 <script>
 import Sold from "../Sold";
+import SoldList from "../Sold_List";
 export default {
   components: {
-    Sold
+    Sold,
+    SoldList
   },
   data() {
     return {
@@ -82,6 +90,20 @@ export default {
 };
 </script>
 <style scoped>
+.shop > p {
+  height: 25px;
+  line-height: 25px;
+  font-weight: bold;
+  margin-left: 7px;
+  font-size: 0.9em;
+}
+.shop_list > p {
+  height: 25px;
+  line-height: 25px;
+  font-weight: bold;
+  margin-left: 7px;
+  font-size: 0.9em;
+}
 .mint-palette-button {
   width: 10px;
   height: 10px;
@@ -101,7 +123,6 @@ export default {
 .shop_container {
   overflow: auto;
   background-color: #ffffff;
-  margin: 7px 0;
 }
 .shop_container::-webkit-scrollbar {
   display: none;
@@ -111,53 +132,5 @@ export default {
   flex-direction: row;
   flex-wrap: nowrap;
   width: 100%;
-  /* overflow: auto; */
-}
-
-.shop_recommend_item_img img {
-  width: 157px;
-  height: 157px;
-}
-.shop_recommend_item {
-  background-color: #ffffff;
-  width: 157px;
-  float: left;
-  flex-shrink: 0;
-  height: 250px;
-  overflow: hidden;
-  padding: 5px;
-  border: #e0dcdc 2px solid;
-}
-.shop_recommend_item_detail {
-  width: 157px;
-  display: flex;
-  font-size: 0.9em;
-  /* height: 100%; */
-  flex-direction: column;
-}
-.shop_recommend_item_detail span {
-  margin: 2px 0;
-}
-.shop_recommend_item_detail_str {
-  font-weight: bold;
-  display: block;
-  font-size: 0.9em;
-  overflow: hidden;
-  padding: 3px 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.shop_recommend_item_detail_sold {
-  font-size: 0.9em;
-  padding: 3px 0;
-  color: #afafaf;
-}
-.shop_recommend_item_detail_price {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  margin-left: 15px;
-  font-size: 1.2em;
-  color: red;
 }
 </style>
