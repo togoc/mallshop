@@ -1,4 +1,3 @@
-const path = require('path')
 const debug = process.env.NODE_ENV !== 'production'
 
 module.exports = {
@@ -38,15 +37,19 @@ module.exports = {
     pwa: { // 单页插件相关配置 https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
     },
     devServer: {
-        open: true,
+        // open: true,
         https: false,
+        // host: 'localhost',
+        // port: 8080,
         hotOnly: false,
         proxy: { // 配置跨域(要重启端口才生效)
             '/api': {
                 target: 'http://localhost:80',
                 ws: true,
                 changOrigin: true,
-
+                pathRewrite: {
+                    '^/api': ''
+                }
             }
         },
 

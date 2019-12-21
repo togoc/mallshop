@@ -6,7 +6,9 @@
       </div>
       <div :class="{'nav':true,'navSmall':small}">
         <span @click="sort()">三</span>
-        <span @click="login()">登录</span>
+        <span @click="login()">
+          <i>设置</i>
+        </span>
       </div>
       <div :class="{'search':true,'searchSmall':small}">
         <mt-search v-model="value" cancel-text></mt-search>
@@ -26,6 +28,9 @@
  */
 
 export default {
+  props: {
+    name: String
+  },
   data() {
     return {
       small: false,
@@ -50,7 +55,9 @@ export default {
       };
     },
     login() {
-      console.log("login");
+      this.$router.push({
+        path: "/setting"
+      });
     },
     sort() {
       console.log("sort");
@@ -63,7 +70,7 @@ export default {
 <style scoped>
 .home_header {
   position: fixed;
-  z-index: 9999;
+  z-index: 999;
 }
 .mint-search {
   height: 100%;

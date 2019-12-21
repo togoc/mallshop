@@ -1,23 +1,32 @@
 <template>
   <div>
     <div class="shop_car">
-      <div class="shop_more">
-        <input type="button" @click="showShop" value="查看购物车" />
+      <div class="shop_more" @click="showShop">
+        <i class="iconfont icon-gouwuchekong">
+          <mt-badge color="red">10</mt-badge>
+        </i>
+        <!-- <span>购物车</span> -->
       </div>
       <div class="count">
         <p>￥11</p>
-        <span>配送费</span>
+        <span>
+          配送费
+          <i>2元</i>
+        </span>
       </div>
       <div class="settle">
         <input type="button" value="去结算" />
       </div>
     </div>
-    <mt-popup v-model="popupVisible" popup-transition="popupVisible" position="bottom">
+    <mt-popup v-model="popupVisible" popup-transition="popup-fade" position="bottom">
       <div class="shop_detail">
         <div class="clear">
           <span>已选商品</span>
-          <div>
-            <span>清空</span>
+          <div class="clear_btn" @click="clearShop">
+            <span>
+              <i class="iconfont icon-delete"></i>
+              清空
+            </span>
           </div>
         </div>
         <div class="list">
@@ -50,19 +59,14 @@
 
 
 <script>
+import "./shopcarfont/iconfont.css";
 export default {
   data() {
     return {
-      popupVisible: true,
+      popupVisible: false,
       list: [
         {
           name: "新奥尔良",
-          price: 121,
-          coupon: 5,
-          count: 1
-        },
-        {
-          name: "10公斤新奥尔良2号11111111111",
           price: 121,
           coupon: 5,
           count: 1
@@ -73,12 +77,33 @@ export default {
   methods: {
     showShop() {
       this.popupVisible = !this.popupVisible;
+    },
+    clearShop() {
+      console.log("clear");
+      this.list = [];
     }
+  },
+  mounted() {
+    this.list = this.$store.state.shopCar;
   }
 };
 </script>
 
 <style scoped>
+.list {
+  /* display: ; */
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 66vh;
+  /* margin-bottom: 55px; */
+}
+.mint-badge,
+.is-size-normal {
+  position: absolute;
+  top: 0px;
+  padding: 2px 2px !important;
+}
 .mint-palette-button {
   width: 20px;
   height: 20px;
@@ -99,7 +124,15 @@ export default {
   height: 20px;
   display: flex;
   flex-direction: row;
-  padding: 20px 0;
+  padding: 15px 0;
+  margin-left: 15px;
+}
+
+.list_item {
+  border-top: 2px solid #f8f8f8;
+}
+.list_item:first-child {
+  border-top: none;
 }
 .list_item_name_price {
   display: flex;
@@ -122,23 +155,38 @@ export default {
 }
 .clear {
   background-color: #f8f8f8;
+  position: fixed;
   display: flex;
+  top: -40px;
+  left: 0;
   justify-content: space-between;
-  margin: 0 7px;
   height: 20px;
-  padding: 10px 0;
+  padding: 10px 7px;
+  font-size: 0.9em;
+  width: 100%;
+  z-index: 9999;
 }
-
+.clear_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  font-size: 0.8em;
+  margin-right: 8%;
+}
 .shop_detail {
   width: 100vw;
-  margin-bottom: 90px;
+  margin-bottom: 55px;
   color: black;
+  max-height: 66vh;
+  overflow: auto;
+  position: relative;
 }
 .shop_car {
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 90px;
+  height: 55px;
   width: 100%;
   color: white;
   display: flex;
@@ -152,15 +200,31 @@ export default {
 }
 .shop_more {
   height: 100%;
-  background-color: #fff;
-  flex: 0 1 auto;
+  background-color: #404142;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 }
-.shop_more > input {
+.shop_more > span {
   outline: none;
   border-style: none;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8em;
+  /* width: 100%; */
+  /* background-color: rgb(185, 14, 14); */
+}
+.icon-gouwuchekong {
+  color: #016ccb;
   width: 100%;
-  background-color: rgb(185, 14, 14);
+  font-size: 2em;
+  height: 100%;
+  text-align: center;
 }
 .count {
   margin: 0 10px;
@@ -171,13 +235,19 @@ export default {
 }
 .count > p {
   font-weight: bold;
-  color: red;
+  color: #f8f8f8;
   font-size: 1.2em;
 }
 .count > span {
   font-weight: bold;
   font-size: 0.8em;
   margin-top: 2px;
+  margin-left: 5px;
+}
+.count > span > i {
+  margin-left: 5px;
+  text-decoration: line-through;
+  color: #7f7f7f;
 }
 .settle {
   flex: 0.5 1 auto;
@@ -188,6 +258,6 @@ export default {
   border-style: none;
   height: 100%;
   width: 100%;
-  background-color: rgb(118, 202, 153);
+  background-color: #59d178;
 }
 </style>

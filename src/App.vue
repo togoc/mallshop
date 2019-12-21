@@ -1,27 +1,39 @@
 <template>
   <div id="app">
     <router-view />
-    <ShopCar class="shop_car" />
   </div>
 </template>
 
 <script>
-import ShopCar from "./views/ShopCar";
+import { Toast } from "mint-ui";
 export default {
   components: {
-    ShopCar
   },
   data() {
-    return {
-    };
+    return {};
   },
-  mounted() {}
+  mounted() {},
+  computed: {
+    isBusiness() {
+      let { identity } = this.$store.state.user;
+      if (identity === "business" || identity === undefined) {
+        return true;
+      } else {
+        return false;
+      }
+
+
+    }
+  },
+  methods: {}
 };
 </script>
 
 
 <style>
 #app {
-  margin-bottom: 90px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin-bottom: 55px;
 }
 </style>

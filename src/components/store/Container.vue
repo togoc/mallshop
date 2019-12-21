@@ -15,8 +15,8 @@
 
 
 <script>
-import Sold from "../Sold";
-import SoldList from "../Sold_List";
+import Sold from "./Sold";
+import SoldList from "./Sold_List";
 export default {
   components: {
     Sold,

@@ -2,7 +2,7 @@
   <div class="home_container">
     <div class="home_container_nav">
       <router-link
-        :to="item.link_url"
+        :to="item.link_url+'/'+item.list_name"
         class="home_container_nav_item"
         v-for="(item, index) in container_nav_list"
         :key="index"
@@ -40,7 +40,7 @@
     //       brande:'蓝月亮'
     //       detail:'蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装'
 <script>
-import Sold from "../Sold";
+import Sold from "../store/Sold";
 export default {
   components: {
     Sold
@@ -50,7 +50,7 @@ export default {
       container_nav_list: [
         {
           img_url: "./images/sn.png",
-          link_url: "/shop",
+          link_url: "/home/store",
           list_name: "苏宁易购"
         },
         {

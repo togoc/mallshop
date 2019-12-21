@@ -3,7 +3,7 @@
     <div class="shop_recommend_item" v-for="(item, index) in shop_recommend_list" :key="index">
       <router-link :to="item.link">
         <div class="shop_recommend_item_img">
-          <img src="./shop/images/recommend.png" alt />
+          <img src="./images/recommend.png" alt />
         </div>
         <div class="shop_recommend_item_detail">
           <span class="item_brande" v-if="item.brande">{{item.brande}}</span>
@@ -111,12 +111,12 @@ export default {
 }
 
 .shop_recommend_item_img img {
-  width: 157px;
-  height: 157px;
+  width: 150px;
+  height: 150px;
 }
 .shop_recommend_item {
   background-color: #ffffff;
-  width: 157px;
+  width: 150px;
   float: left;
   flex-shrink: 0;
   height: 250px;
@@ -126,7 +126,7 @@ export default {
   border: #e0dcdc 2px solid;
 }
 .shop_recommend_item_detail {
-  width: 157px;
+  width: 150px;
   display: flex;
   font-size: 0.9em;
   height: 50px;
@@ -146,7 +146,7 @@ export default {
 }
 .shop_recommend_item_detail_inner {
   font-size: 0.9em;
-  width: 157px;
+  width: 150px;
   line-height: 20px;
   height: 40px;
 }

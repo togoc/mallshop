@@ -1,15 +1,15 @@
 <template>
   <div>
     <Header />
-    <Container/>
+    <Container />
   </div>
 </template>
 
 
 
 <script>
-import Header from "../components/shop/Header";
-import Container from "../components/shop/Container";
+import Header from "./Header";
+import Container from "./Container";
 export default {
   components: {
     Header,

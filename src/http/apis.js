@@ -1,5 +1,7 @@
 export default {
-    baseURL: '',
-    test:'/test'
+    baseURL: '/api',
+    test: '/test',
+    signIn: '/login',
+    signUp: '/register'
 
 }
