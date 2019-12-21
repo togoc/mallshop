@@ -1,6 +1,6 @@
 <template>
   <div class="login" v-if="!isSignIn">
-    <mt-header fixed title="固定在顶部">
+    <mt-header fixed title="登录 / 注册">
       <router-link to="/" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>

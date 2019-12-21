@@ -55,6 +55,13 @@ export default (ajax) => {
                 duration: 1500
             });
         }
+        if (status === 500) {
+            Toast({
+                message: '服务器请求错误',
+                position: "top",
+                duration: 1500
+            });
+        }
         return Promise.reject(error)
     })
 
