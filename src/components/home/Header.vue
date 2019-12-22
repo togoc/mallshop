@@ -41,6 +41,8 @@ export default {
   mounted() {
     this.addListener();
   },
+  created(){
+  },
   methods: {
     addListener() {
       window.onscroll = () => {

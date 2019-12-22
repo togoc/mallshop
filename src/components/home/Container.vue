@@ -2,7 +2,7 @@
   <div class="home_container">
     <div class="home_container_nav">
       <router-link
-        :to="item.link_url+'/'+item.list_name"
+        :to="item.link_url"
         class="home_container_nav_item"
         v-for="(item, index) in container_nav_list"
         :key="index"
@@ -60,8 +60,8 @@ export default {
         },
         {
           img_url: "./images/sn.png",
-          link_url: "/shop",
-          list_name: "苏宁易购"
+          link_url: "/form",
+          list_name: "我的订单"
         },
         {
           img_url: "./images/sn.png",

@@ -6,6 +6,8 @@ import Login from '../components/user/Login'
 import Setting from '../components/user/Setting'
 import Store from '../components/store/Store'
 import HomeContainer from '../components/home/Container'
+import Business from '../views/Business'
+import Form from '../views/Form'
 Vue.use(VueRouter)
 
 
@@ -18,7 +20,7 @@ const routes = [{
         component: Home,
         children: [
             { path: '', component: HomeContainer },
-            { path: '/home/store/:id', component: Store }
+            { path: '/home/store', component: Store }
         ]
     },
     {
@@ -26,8 +28,15 @@ const routes = [{
         component: Login
     },
     {
+        path: '/form',
+        component: Form
+    },
+    {
         path: '/setting',
         component: Setting
+    }, {
+        path: '/business',
+        component: Business
     },
     {
         path: '*',

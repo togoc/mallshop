@@ -12,7 +12,9 @@ export default {
   data() {
     return {};
   },
-  mounted() {},
+  mounted() {
+    console.log(1)
+  },
   computed: {
     isBusiness() {
       let { identity } = this.$store.state.user;
@@ -21,8 +23,6 @@ export default {
       } else {
         return false;
       }
-
-
     }
   },
   methods: {}

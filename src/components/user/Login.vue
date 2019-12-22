@@ -89,7 +89,11 @@ export default {
   },
   updated() {
     if (this.isSignIn) {
-      this.$router.push({ path: "/" });
+      if (this.$store.state.user.identity === "business") {
+        this.$router.push({ path: "/business" });
+      } else {
+        this.$router.push({ path: "/" });
+      }
     }
   },
   created() {
@@ -116,9 +120,10 @@ export default {
     signUp() {
       if (this.verifyCode.validate(this.captcha)) {
         this.$store.dispatch("signUp", {
-          name: "togoc",
-          email: "309128090@qq.com",
-          password: "1111"
+          name: "togo",
+          email: "30912809@qq.com",
+          password: "1111",
+          identity: "business" //business
         });
         // alert("验证码正确");
       } else {
