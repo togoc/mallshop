@@ -6,8 +6,11 @@ import Login from '../components/user/Login'
 import Setting from '../components/user/Setting'
 import Store from '../components/store/Store'
 import HomeContainer from '../components/home/Container'
-import Business from '../views/Business'
+import BusinessIndex from '../views/BusinessIndex'
+import Business from '../components/business/Business'
+import Add from '../components/business/goodsmanage/Add'
 import Form from '../views/Form'
+import jwt from "jwt-decode";
 Vue.use(VueRouter)
 
 
@@ -36,7 +39,11 @@ const routes = [{
         component: Setting
     }, {
         path: '/business',
-        component: Business
+        component: BusinessIndex,
+        children: [
+            { path: '', component: Business },
+            { path: '/business/add', component: Add }
+        ]
     },
     {
         path: '*',
@@ -51,12 +58,26 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    let isLogin = localStorage.getItem("mallshoptoken") ? true : false;
+    console.log(1)
+    let token = localStorage.getItem("mallshoptoken")
+    let isLogin = token ? true : false;
     if (to.path === "/login") {
         next()
     } else {
         isLogin ? next() : next("/login")
     }
+
+    try {
+        let userType = jwt(token).identity
+        if (to.path === '/login') {
+            next()
+        } else {
+            userType === "business" ? (to.path.indexOf('/business') !== -1 ? next() : next("/business")) : (userType !== 'normal' ? next("/login") : (to.path === "/business" ? next("/") : next()))
+        }
+    } catch (err) {
+        next("/login")
+    }
+
 })
 
 export default router

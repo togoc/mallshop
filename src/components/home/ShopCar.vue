@@ -3,19 +3,19 @@
     <div class="shop_car">
       <div class="shop_more" @click="showShop">
         <i class="iconfont icon-gouwuchekong">
-          <mt-badge color="red">10</mt-badge>
+          <mt-badge color="red">{{list.length}}</mt-badge>
         </i>
         <!-- <span>购物车</span> -->
       </div>
       <div class="count">
-        <p>￥11</p>
+        <p>￥{{allCount.toFixed(2)}}</p>
         <span>
           配送费
           <i>2元</i>
         </span>
       </div>
       <div class="settle">
-        <input type="button" value="去结算" />
+        <input type="button" @click="pay" value="去结算" />
       </div>
     </div>
     <mt-popup v-model="popupVisible" popup-transition="popup-fade" position="bottom">
@@ -33,16 +33,16 @@
           <div class="list_item" v-for="(item, index) in list" :key="index">
             <div class="list_item_name_price">
               <span class="list_item_name">{{item.name}}</span>
-              <span class="list_item_price">￥{{item.price}}</span>
+              <span class="list_item_price">￥{{item.price.toFixed(2)}}</span>
             </div>
             <div class="list_item_count">
-              <mt-palette-button content="-">
+              <mt-palette-button @expanded="decrement(item)" content="-">
                 <div class="my-icon-button"></div>
                 <div class="my-icon-button"></div>
                 <div class="my-icon-button"></div>
               </mt-palette-button>
               <span>{{item.count}}</span>
-              <mt-palette-button content="+">
+              <mt-palette-button @expanded="increment(item)" content="+">
                 <div class="my-icon-button"></div>
                 <div class="my-icon-button"></div>
                 <div class="my-icon-button"></div>
@@ -60,7 +60,18 @@
 
 <script>
 import "./shopcarfont/iconfont.css";
+import { addBuyList } from "../../http";
 export default {
+  computed: {
+    allCount() {
+      let count = 0;
+      this.list.map(item => {
+        count += item.price * item.count;
+        return item;
+      });
+      return count;
+    }
+  },
   data() {
     return {
       popupVisible: false,
@@ -69,7 +80,9 @@ export default {
           name: "新奥尔良",
           price: 121,
           coupon: 5,
-          count: 1
+          count: 1,
+          storeId: "123",
+          goodsId: "123"
         }
       ]
     };
@@ -81,6 +94,36 @@ export default {
     clearShop() {
       console.log("clear");
       this.list = [];
+    },
+    increment(listItem) {
+      this.list.map((item, index) => {
+        if (item.goodsId === listItem.goodsId) {
+          item.count += 1;
+        }
+        return item;
+      });
+      // console.log(this.list);
+    },
+    decrement(listItem) {
+      this.list.map((item, index) => {
+        if (item.goodsId === listItem.goodsId) {
+          item.count -= 1;
+        }
+        return item;
+      });
+    },
+    pay() {
+      this.list.map((item, index) => {
+        if (item.count === 0) {
+          this.list.splice(index, 1);
+        }
+        return item;
+      });
+      addBuyList(this.list)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => console.log(err));
     }
   },
   mounted() {

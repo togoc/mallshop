@@ -28,7 +28,6 @@
       </div>
       <div class="form_item_edit_item">
         <mt-button size="small" type="danger">取消订单</mt-button>
-        <mt-button class="pay" size="small" type="primary">去付款</mt-button>
       </div>
     </div>
   </div>
@@ -74,7 +73,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 .form_item_last_price {
   display: flex;

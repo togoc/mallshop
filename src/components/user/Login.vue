@@ -58,9 +58,8 @@
           type="password"
           v-model="password"
         ></mt-field>
-        <mt-field class="check" label="验证码" v-model="captcha">
-          <div id="v_container"></div>
-        </mt-field>
+        <mt-field class="check" label="验证码" state="warning" v-model="captcha"></mt-field>
+        <div id="v_container"></div>
         <mt-button size="large" color="red" @click="signUp" type="primary">注册</mt-button>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -107,8 +106,8 @@ export default {
     signIn() {
       new Promise((rs, rj) => {
         this.$store.dispatch("signIn", {
-          name: "togoc",
-          email: "309128090@qq.com",
+          name: "togo",
+          email: "30912809@qq.com",
           password: "1111"
         });
       })
@@ -149,12 +148,17 @@ export default {
   margin-top: 20px;
 }
 #v_container {
-  width: 190px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
   height: 50px;
 }
 .login {
   margin-top: 55px;
 }
+
 .mint-header {
   height: 55px;
 }

@@ -2,6 +2,7 @@ export default {
     baseURL: '/api',
     test: '/test',
     signIn: '/login',
-    signUp: '/register'
+    signUp: '/register',
+    addBuyList: '/addbuylist'
 
 }

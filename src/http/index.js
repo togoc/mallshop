@@ -20,3 +20,7 @@ export const signIn = (user) => {
 export const signUp = (user) => {
     return ajax.post(apis.signUp, {...user })
 }
+
+export const addBuyList = (list) => {
+    return ajax.post(apis.addBuyList, {...list })
+}

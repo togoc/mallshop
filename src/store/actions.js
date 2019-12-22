@@ -13,9 +13,8 @@ export const getTest = ({ commit }, arg) => {
 export const signUp = ({ commit }, user) => {
     console.log(user)
     http.signUp(user).then(res => {
-            console.log(res)
-        })
-        // commit('', arg)
+        console.log(res)
+    })
 }
 
 

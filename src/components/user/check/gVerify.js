@@ -2,7 +2,7 @@ export default function GVerify(options) { //创建一个图形验证码对象�
     this.options = { //默认options参数值
         id: "", //容器Id
         canvasId: "verifyCanvas", //canvas的ID
-        width: "190", //默认canvas宽度
+        width: "160", //默认canvas宽度
         height: "50", //默认canvas高度
         type: "blend", //图形验证码默认类型blend:数字字母混合类型、number:纯数字、letter:纯字母
         code: ""
@@ -31,7 +31,7 @@ GVerify.prototype = {
         _init: function() {
             var con = document.getElementById(this.options.id);
             var canvas = document.createElement("canvas");
-            this.options.width = con.offsetWidth > 0 ? con.offsetWidth : "190";
+            this.options.width = con.offsetWidth > 0 ? con.offsetWidth : "160";
             this.options.height = con.offsetHeight > 0 ? con.offsetHeight : "50";
             canvas.id = this.options.canvasId;
             canvas.width = this.options.width;

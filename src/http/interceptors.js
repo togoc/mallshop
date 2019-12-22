@@ -50,7 +50,7 @@ export default (ajax) => {
         let { data, status } = error.response
         if (status === 401) {
             Toast({
-                message: data.message,
+                message: data.message ? data.message : "身份验证失败,请重新登陆!",
                 position: "top",
                 duration: 1500
             });

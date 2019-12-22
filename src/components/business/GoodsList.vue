@@ -1,5 +1,5 @@
 <template>
     <div>
-        business
+        GoodsList
     </div>
 </template>
