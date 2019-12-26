@@ -1,6 +1,6 @@
 <template>
   <div class="business">
-    <mt-tabbar v-model="selected">
+    <mt-tabbar fixed v-model="selected">
       <mt-tab-item id="tab1">
         <i class="iconfont icon-yulan"></i>
         <span>预览</span>
@@ -50,7 +50,12 @@ export default {
     this.checkPath();
   },
   methods: {
-    checkPath() {}
+    checkPath() {
+      if (this.$route.query.from) {
+        this.selected = this.$route.query.from;
+      }
+      console.log(this.$route.query);
+    }
   },
   // lazy-loaded
   components: {

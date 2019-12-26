@@ -1,62 +1,39 @@
 <template>
   <div>
-    <div class="shop_recommend_item" v-for="(item, index) in shop_recommend_list" :key="index">
-      <router-link :to="item.link">
+    <div class="shop_recommend_item">
+      <router-link to="/business">
         <div class="shop_recommend_item_img">
-          <img src="./images/recommend.png" alt />
+          <img v-lazy="item.mini_pic[0]" alt />
         </div>
         <div class="shop_recommend_item_detail">
           <span class="item_brande" v-if="item.brande">{{item.brande}}</span>
+          <span class="item_brande" v-if="item.name">{{item.name}}</span>
           <span class="item_coupon" v-if="item.coupon">{{item.coupon}}元券</span>
           <div class="shop_recommend_item_detail_inner">
             <span class="shop_recommend_item_detail_str">{{item.detail}}</span>
           </div>
-          <span class="shop_recommend_item_detail_sold">{{item.sold}}</span>
+          <span class="shop_recommend_item_detail_sold">
+            月销量:
+            <i>{{item.sold}}</i>
+          </span>
         </div>
       </router-link>
       <div class="shop_recommend_item_detail_price">
-        <span>￥{{item.price}}</span>
-        <mt-palette-button
-          content="+"
-          @expand.native="main_log('expand')"
-          @expanded.native="main_log('expanded')"
-          @collapse.native="main_log('collapse')"
-          direction="rt"
-          class="pb"
-          :radius="80"
-          ref="target_1"
-          mainButtonStyle="color:#fff;background-color:#26a2ff;"
-          style="left:30px;"
-        >
-          <div class="my-icon-button indexicon icon-popup" @touchstart="sub_log(1)"></div>
-          <div class="my-icon-button indexicon icon-popup" @touchstart="sub_log(2)"></div>
-          <div class="my-icon-button indexicon icon-popup" @touchstart="sub_log(3)"></div>
-        </mt-palette-button>
+        <span>￥{{(item.price).toFixed(2)}}</span>
+        <mt-button class="add_pic_btn" type="primary">+</mt-button>
       </div>
     </div>
   </div>
 </template>
 
 
-
 <script>
 export default {
   props: {
-    shop_recommend_list: Array
+    item: Object
   },
   data() {
-    return {
-      //   shop_recommend_list: [
-      //     {
-      //       link: "/",
-      //       img_url: "",
-      //       brande: "蓝月亮"
-      //       detail: "小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼",
-      //       detail_sold: "月售111 好评率:99%",
-      //       price: "19.99"
-      //     }
-      //   ]
-    };
+    return {};
   },
   methods: {
     main_log(val) {
@@ -73,6 +50,14 @@ export default {
 
 
 <style scoped>
+.add_pic_btn {
+  border-radius: 50%;
+  font-size: 18px;
+  height: 30px;
+  width: 30px;
+  margin: 0;
+  padding: 0;
+}
 .item_coupon {
   position: absolute;
   right: 0;
@@ -109,7 +94,10 @@ export default {
   width: 10px;
   height: 10px;
 }
-
+.shop_recommend_item_img {
+  background-color: #808080;
+  height: 150px;
+}
 .shop_recommend_item_img img {
   width: 150px;
   height: 150px;
@@ -163,5 +151,31 @@ export default {
   margin-top: 5px;
   font-size: 1.2em;
   color: red;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 350px) {
+  .shop_recommend_item {
+    width: 100px;
+    height: 190px;
+  }
+  .shop_recommend_item_img img {
+    width: 100px;
+    height: 100px;
+  }
+  .shop_recommend_item_img {
+    height: 100px;
+  }
+  .shop_recommend_item_detail_price {
+    margin: 0;
+    font-size: 1em;
+  }
+  .shop_recommend_item_detail_inner{
+    width: 110px;
+  }
+  .add_pic_btn {
+    width: 25px;
+    height: 25px;
+  }
 }
 </style>

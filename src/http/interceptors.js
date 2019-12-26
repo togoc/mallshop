@@ -3,7 +3,7 @@ import { Toast } from "mint-ui";
 
 function start() {
     Indicator.open({
-        spinnerType: "fading-circle",
+        spinnerType: "snake",
     });
 }
 
@@ -57,7 +57,7 @@ export default (ajax) => {
         }
         if (status === 500) {
             Toast({
-                message: '服务器请求错误',
+                message: data.message ? data.message : '服务器请求错误',
                 position: "top",
                 duration: 1500
             });

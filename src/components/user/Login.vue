@@ -20,7 +20,6 @@
         ></mt-field>
         <mt-field
           label="邮箱"
-          disabled
           placeholder="请输入邮箱"
           state="success"
           type="email"
@@ -33,7 +32,9 @@
           type="password"
           v-model="password"
         ></mt-field>
-        <mt-button size="large" color="red" @click="signIn" type="primary">登录</mt-button>
+        <div class="login_register">
+          <mt-button size="large" color="red" @click="signIn" type="primary">登录</mt-button>
+        </div>
       </mt-tab-container-item>
       <!-- 注册 -->
       <mt-tab-container-item id="2">
@@ -60,7 +61,9 @@
         ></mt-field>
         <mt-field class="check" label="验证码" state="warning" v-model="captcha"></mt-field>
         <div id="v_container"></div>
-        <mt-button size="large" color="red" @click="signUp" type="primary">注册</mt-button>
+        <div class="login_register">
+          <mt-button size="large" color="red" @click="signUp" type="primary">注册</mt-button>
+        </div>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -103,12 +106,17 @@ export default {
     this.verifyCode = new gVerify("v_container");
   },
   methods: {
+    // selected: "1",
+    // name: "togoc",
+    // email: "309128090@qq.com",
+    // password: "1111",
+    // identity: "normal", //business
     signIn() {
       new Promise((rs, rj) => {
         this.$store.dispatch("signIn", {
-          name: "togo",
-          email: "30912809@qq.com",
-          password: "1111"
+          name: this.name,
+          email: this.email,
+          password: this.password
         });
       })
         .then(res => {
@@ -119,10 +127,10 @@ export default {
     signUp() {
       if (this.verifyCode.validate(this.captcha)) {
         this.$store.dispatch("signUp", {
-          name: "togo",
-          email: "30912809@qq.com",
+          name: "togoc",
+          email: "309128090@qq.com",
           password: "1111",
-          identity: "business" //business
+          identity: "normal" //business
         });
         // alert("验证码正确");
       } else {
@@ -141,9 +149,7 @@ export default {
 .check {
   border-bottom: 1px solid #dbdbdb;
 }
-.mint-tab-container-item .mint-button {
-  margin-top: 20px;
-}
+
 .mint-tab-container-item {
   margin-top: 20px;
 }
@@ -158,7 +164,18 @@ export default {
 .login {
   margin-top: 55px;
 }
-
+.login_register {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+}
+.login_register .mint-button {
+  height: 100%;
+}
 .mint-header {
   height: 55px;
 }

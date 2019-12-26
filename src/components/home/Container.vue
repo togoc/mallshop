@@ -26,24 +26,26 @@
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="10"
     >
-      <Sold class="home_container_favorite_item" :shop_recommend_list="container_favorite" />
-      <div class="container_loading">
+      <SoldItem
+        class="home_container_favorite_item"
+        v-for="(item, index) in container_favorite"
+        :item="item"
+        :key="index"
+      />
+      <div class="container_loading" v-if="loading&&!end">
         <mt-spinner type="triple-bounce"></mt-spinner>
       </div>
     </div>
   </div>
 </template>
 
-    //       img_url: "./images/swipe.png",
-    //       link_url: "/",
-    //       price: 11.8,
-    //       brande:'蓝月亮'
-    //       detail:'蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装'
 <script>
-import Sold from "../store/Sold";
+import SoldItem from "../store/SoldItem";
+import { getManageList } from "../../http";
+import { mapState } from "vuex";
 export default {
   components: {
-    Sold
+    SoldItem
   },
   data() {
     return {
@@ -88,102 +90,41 @@ export default {
           link_url: "/"
         }
       ],
-      container_favorite: [
-        {
-          img_url: "./images/swipe.png",
-          link: "/",
-          price: 11.8,
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
-          brande: "蓝月亮",
-          sold: "月售111 好评率:99%",
-          coupon: 10
-        },
-        {
-          img_url: "./images/swipe.png",
-          link: "/",
-          price: 11.8,
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
-          brande: "蓝月亮",
-          sold: "月售111 好评率:99%",
-          coupon: 10
-        },
-        {
-          img_url: "./images/swipe.png",
-          link: "/",
-          price: 11.8,
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
-          brande: "蓝月亮",
-          sold: "月售111 好评率:99%",
-          coupon: 10
-        },
-        {
-          img_url: "./images/swipe.png",
-          link: "/",
-          price: 11.8,
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
-          brande: "蓝月亮",
-          sold: "月售111 好评率:99%",
-          coupon: 10
-        },
-        {
-          img_url: "./images/swipe.png",
-          link: "/",
-          price: 11.8,
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
-          brande: "蓝月亮",
-          sold: "月售111 好评率:99%",
-          coupon: 10
-        },
-        {
-          img_url: "./images/swipe.png",
-          link: "/",
-          price: 11.8,
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
-          brande: "蓝月亮",
-          sold: "月售111 好评率:99%",
-          coupon: 10
-        },
-        {
-          img_url: "./images/swipe.png",
-          link: "/",
-          price: 11.8,
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
-          brande: "蓝月亮",
-          sold: "月售111 好评率:99%",
-          coupon: 10
-        },
-        {
-          img_url: "./images/swipe.png",
-          link: "/",
-          price: 11.8,
-          detail: "蓝月亮洗衣液 薰衣草香 深层洁净衣物护理 500g/瓶装",
-          brande: "蓝月亮",
-          sold: "月售111 好评率:99%",
-          coupon: 10
-        }
-      ],
-      loading: false
+      loading: false,
+      end: false,
+      index: 0
     };
+  },
+  computed: {
+    ...mapState({
+      container_favorite: state =>
+        state.normalList.map(item => {
+          //防止没有图片时报错
+          if (item.mini_pic.length === 0) {
+            item.mini_pic[0] =
+              "http://192.168.3.3/mallshop/assets/img/not-pic.png";
+          }
+          return item;
+        })
+    })
   },
   methods: {
     loadMore() {
-      // this.loading = true;
-      // setTimeout(() => {
-      //   let last = this.container_favorite[this.container_favorite.length - 1];
-      //   for (let i = 1; i <= 4; i++) {
-      //     this.container_favorite.push({
-      //       link: "/",
-      //       img_url: "",
-      //       detail:
-      //         "小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍鱼小鲍111111111111111111111111111111111111111鱼小鲍鱼",
-      //       sold: "月售111 好评率:99%",
-      //       price: "19.99",
-      //       brande: "蓝月亮",
-      //       coupon: 10
-      //     });
-      //   }
-      //   this.loading = false;
-      // }, 2500);
+      if (this.loading) {
+        return;
+      }
+      this.loading = true;
+      getManageList("normal", this.index).then(res => {
+        this.index += 1;
+        if (!res.data.length) {
+          this.end = true;
+          return;
+        }
+        this.$store.state.normalList = this.$store.state.normalList.concat(
+          res.data
+        );
+        this.loading = false;
+      });
     }
   }
 };

@@ -5,5 +5,5 @@ export default {
     },
     [types.ADD_BUYLIST](state, buylist) {
         state.buyList = buylist
-    },
+    }
 }

@@ -58,7 +58,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log(1)
     let token = localStorage.getItem("mallshoptoken")
     let isLogin = token ? true : false;
     if (to.path === "/login") {
