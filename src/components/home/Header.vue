@@ -1,16 +1,16 @@
 <template>
   <div class="home_header">
-    <div :class="{'scroll':true,'big':true,'small':small}">
-      <div :class="{'logo':true,'logoSmall':small}">
+    <div :class="['scroll',{'small':small||smalled}]">
+      <div :class="{'logo':true,'logoSmall':small||smalled}">
         <img class="img" src="./images/logo.png" alt="logo" />
       </div>
-      <div :class="{'nav':true,'navSmall':small}">
-        <span @click="sort()">三</span>
+      <div :class="{'nav':true,'navSmall':small||smalled}">
+        <span @click="smalled?back():sort()">{{smalled?'返回':'三'}}</span>
         <span @click="login()">
           <i>设置</i>
         </span>
       </div>
-      <div :class="{'search':true,'searchSmall':small}">
+      <div :class="{'search':true,'searchSmall':small||smalled}">
         <mt-search v-model="value" cancel-text></mt-search>
       </div>
     </div>
@@ -38,11 +38,15 @@ export default {
       value: ""
     };
   },
+  computed: {
+    smalled() {
+      return this.$route.path !== "/home";
+    }
+  },
   mounted() {
     this.addListener();
   },
-  created(){
-  },
+  created() {},
   methods: {
     addListener() {
       window.onscroll = () => {
@@ -52,6 +56,7 @@ export default {
           this.small = true;
         }
         if (winScroll < 35) {
+          console.log(1);
           this.small = false;
         }
       };
@@ -62,7 +67,12 @@ export default {
       });
     },
     sort() {
-      console.log("sort");
+      console.log(this.$route);
+    },
+    back() {
+      this.$router.push({
+        path: "/home"
+      });
     }
   }
 };
@@ -87,6 +97,7 @@ export default {
 
 .scroll {
   width: 100%;
+  height: 90px;
   top: 0;
   left: 0;
   background-color: red;
@@ -124,6 +135,7 @@ export default {
   transition: all 0.3s linear;
   height: 44px;
   z-index: 2;
+  font-weight: bold;
   width: 100%;
   display: flex;
   position: relative;
@@ -145,9 +157,6 @@ export default {
   position: relative;
   /* background-color: rgba(0, 0, 0, 0); */
   width: 100%;
-}
-.big {
-  height: 90px;
 }
 
 .small {

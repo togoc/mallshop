@@ -63,7 +63,7 @@ export default {
           if (item.mini_pic.length === 0) {
             let item1 = JSON.parse(JSON.stringify(item));
             item1.mini_pic[0] =
-              "http://192.168.3.3/mallshop/assets/img/not-pic.png";
+              "http://106.13.184.92/mallshop/assets/img/no-pic.jpeg";
             return item1;
           }
           return item;
@@ -74,7 +74,7 @@ export default {
           if (item.mini_pic.length === 0) {
             let item1 = JSON.parse(JSON.stringify(item));
             item1.mini_pic[0] =
-              "http://192.168.3.3/mallshop/assets/img/not-pic.png";
+              "http://106.13.184.92/mallshop/assets/img/no-pic.jpeg";
             return item1;
           }
           return item;

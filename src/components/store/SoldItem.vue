@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="shop_recommend_item">
-      <router-link to="/business">
+      <router-link :to="{path:'/home/goodsdetail/'+item._id,query:{item}}">
         <div class="shop_recommend_item_img">
           <img v-lazy="item.mini_pic[0]" alt />
         </div>
@@ -28,6 +28,7 @@
 
 
 <script>
+
 export default {
   props: {
     item: Object
@@ -170,7 +171,7 @@ export default {
     margin: 0;
     font-size: 1em;
   }
-  .shop_recommend_item_detail_inner{
+  .shop_recommend_item_detail_inner {
     width: 110px;
   }
   .add_pic_btn {

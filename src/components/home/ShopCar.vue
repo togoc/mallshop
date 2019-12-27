@@ -3,12 +3,12 @@
     <div class="shop_car">
       <div class="shop_more" @click="showShop">
         <i class="iconfont icon-gouwuchekong">
-          <mt-badge color="red">{{list.length}}</mt-badge>
+          <mt-badge color="red">{{this.$store.state.shopCar.length}}</mt-badge>
         </i>
         <!-- <span>购物车</span> -->
       </div>
-      <div class="count">
-        <p>￥{{allCount.toFixed(2)}}</p>
+      <div class="num">
+        <p>￥{{allnum.toFixed(2)}}</p>
         <span>
           配送费
           <i>2元</i>
@@ -18,7 +18,12 @@
         <input type="button" @click="pay" value="去结算" />
       </div>
     </div>
-    <mt-popup v-model="popupVisible" popup-transition="popup-fade" position="bottom">
+    <mt-popup
+      v-model="popupVisible"
+      class="car_list_bg"
+      popup-transition="popup-fade"
+      position="bottom"
+    >
       <div class="shop_detail">
         <div class="clear">
           <span>已选商品</span>
@@ -30,23 +35,16 @@
           </div>
         </div>
         <div class="list">
-          <div class="list_item" v-for="(item, index) in list" :key="index">
+          <div class="list_item" v-for="(item, index) in this.$store.state.shopCar" :key="index">
             <div class="list_item_name_price">
+              <i @click="delitem(item)" class="iconfont icon-delete delitem"></i>
               <span class="list_item_name">{{item.name}}</span>
               <span class="list_item_price">￥{{item.price.toFixed(2)}}</span>
             </div>
-            <div class="list_item_count">
-              <mt-palette-button @expanded="decrement(item)" content="-">
-                <div class="my-icon-button"></div>
-                <div class="my-icon-button"></div>
-                <div class="my-icon-button"></div>
-              </mt-palette-button>
-              <span>{{item.count}}</span>
-              <mt-palette-button @expanded="increment(item)" content="+">
-                <div class="my-icon-button"></div>
-                <div class="my-icon-button"></div>
-                <div class="my-icon-button"></div>
-              </mt-palette-button>
+            <div class="list_item_num">
+              <button @click="item.num>0?item.num--:''">-</button>
+              {{item.num}}
+              <button @click="item.num<item.count?item.num++:''">+</button>
             </div>
           </div>
         </div>
@@ -63,28 +61,18 @@ import "./shopcarfont/iconfont.css";
 import { addBuyList } from "../../http";
 export default {
   computed: {
-    allCount() {
-      let count = 0;
-      this.list.map(item => {
-        count += item.price * item.count;
+    allnum() {
+      let num = 0;
+      this.$store.state.shopCar.map(item => {
+        num += item.price * item.num;
         return item;
       });
-      return count;
+      return num;
     }
   },
   data() {
     return {
-      popupVisible: false,
-      list: [
-        {
-          name: "新奥尔良",
-          price: 121,
-          coupon: 5,
-          count: 1,
-          storeId: "123",
-          goodsId: "123"
-        }
-      ]
+      popupVisible: false
     };
   },
   methods: {
@@ -93,42 +81,33 @@ export default {
     },
     clearShop() {
       console.log("clear");
-      this.list = [];
+      this.$store.state.shopCar = [];
     },
-    increment(listItem) {
-      this.list.map((item, index) => {
-        if (item.goodsId === listItem.goodsId) {
-          item.count += 1;
+    delitem(listItem) {
+      this.$store.state.shopCar.map((item, index) => {
+        if (
+          item._id === listItem._id &&
+          item.selectStyle === listItem.selectStyle
+        ) {
+          this.$store.state.shopCar.splice(index, 1);
         }
-        return item;
-      });
-      // console.log(this.list);
-    },
-    decrement(listItem) {
-      this.list.map((item, index) => {
-        if (item.goodsId === listItem.goodsId) {
-          item.count -= 1;
-        }
-        return item;
       });
     },
     pay() {
-      this.list.map((item, index) => {
-        if (item.count === 0) {
-          this.list.splice(index, 1);
-        }
-        return item;
-      });
-      addBuyList(this.list)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => console.log(err));
+      // this.$store.state.shopCar.map((item, index) => {
+      //   if (item.num === 0) {
+      //     this.$store.state.shopCar.splice(index, 1);
+      //   }
+      //   return item;
+      // });
+      // addBuyList(this.$store.state.shopCar)
+      //   .then(res => {
+      //     console.log(res);
+      //   })
+      //   .catch(err => console.log(err));
     }
   },
-  mounted() {
-    this.list = this.$store.state.shopCar;
-  }
+  mounted() {}
 };
 </script>
 
@@ -140,6 +119,10 @@ export default {
   overflow-x: hidden;
   max-height: 66vh;
   /* margin-bottom: 55px; */
+}
+.delitem {
+  font-weight: bold;
+  color: rgb(161, 0, 0);
 }
 .mint-badge,
 .is-size-normal {
@@ -154,11 +137,11 @@ export default {
   font-size: 12px;
   color: white;
 }
-.list_item_count {
+.list_item_num {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin-right: 10px;
+  margin-right: 7px;
 }
 .list_item_price {
   color: red;
@@ -184,6 +167,13 @@ export default {
   flex: 3 1 auto;
   margin: 0 10px;
 }
+.list_item_name_price * {
+  display: flex;
+  direction: row;
+  justify-content: center;
+  align-items: center;
+  line-height: 20px;
+}
 .list_item_name {
   width: 165px;
   display: block;
@@ -193,7 +183,7 @@ export default {
   font-size: 0.9em;
   letter-spacing: 1px;
 }
-.list_item_count {
+.list_item_num {
   flex: 1 1 auto;
 }
 .clear {
@@ -217,6 +207,9 @@ export default {
   font-size: 0.8em;
   margin-right: 8%;
 }
+.clear >span{
+  font-weight: bold;
+}
 .shop_detail {
   width: 100vw;
   margin-bottom: 55px;
@@ -235,7 +228,7 @@ export default {
   display: flex;
   flex-direction: row;
   background-color: #404042;
-  z-index: 9999;
+  z-index: 2111;
 }
 
 .shop_car_detail {
@@ -269,25 +262,25 @@ export default {
   height: 100%;
   text-align: center;
 }
-.count {
+.num {
   margin: 0 10px;
   flex: 2 1 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.count > p {
+.num > p {
   font-weight: bold;
   color: #f8f8f8;
   font-size: 1.2em;
 }
-.count > span {
+.num > span {
   font-weight: bold;
   font-size: 0.8em;
   margin-top: 2px;
   margin-left: 5px;
 }
-.count > span > i {
+.num > span > i {
   margin-left: 5px;
   text-decoration: line-through;
   color: #7f7f7f;

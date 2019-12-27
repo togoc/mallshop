@@ -7,6 +7,7 @@ import Setting from '../components/user/Setting'
 import Store from '../components/store/Store'
 import HomeContainer from '../components/home/Container'
 import BusinessIndex from '../views/BusinessIndex'
+import GoodsDetail from '../views/GoodsDetail'
 import Business from '../components/business/Business'
 import Add from '../components/business/goodsmanage/Add'
 import Form from '../views/Form'
@@ -23,6 +24,7 @@ const routes = [{
         component: Home,
         children: [
             { path: '', component: HomeContainer },
+            { path: '/home/goodsdetail/:id', component: GoodsDetail },
             { path: '/home/store', component: Store }
         ]
     },

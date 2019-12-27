@@ -6,14 +6,16 @@ export default {
         identity: "normal", //business
     },
     showShop: false,
-    shopCar: [{
-        name: "10公斤新奥尔良2号11111111111",
-        goodsId: '1231',
-        price: 121,
-        coupon: 5,
-        count: 1,
-        storeId: '123',
-    }],
+    shopCar: [
+        //     {
+        //     name: "10公斤新奥尔良2号11111111111",
+        //     goodsId: '1231',
+        //     price: 121,
+        //     coupon: 5,
+        //     count: 1,
+        //     storeId: '123',
+        // }
+    ],
     coupon: [{
         couponId: '123',
         goodsId: '123',

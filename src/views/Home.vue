@@ -14,6 +14,9 @@ import ShopCar from "../components/home/ShopCar";
 import jwt from "jwt-decode";
 import { mapState } from "vuex";
 export default {
+  data() {
+    return {};
+  },
   components: {
     Header,
     Container,
@@ -22,6 +25,7 @@ export default {
   mounted() {
     this.setUser();
   },
+  created() {},
   methods: {
     setUser() {
       let isLogin = localStorage.getItem("mallshoptoken") ? true : false;

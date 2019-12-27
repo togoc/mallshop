@@ -53,6 +53,7 @@
 </template>
 <script>
 import { postGoods, getManageList } from "../../http";
+import { Indicator } from "mint-ui";
 export default {
   data() {
     return {
@@ -76,6 +77,7 @@ export default {
       item.state === "out" ? (item.state = "on") : (item.state = "out");
       console.log({ ...item });
       postGoods({ ...item }).then(res => {
+        Indicator.close();
         console.log(res);
       });
     },

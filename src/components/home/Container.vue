@@ -102,7 +102,7 @@ export default {
           //防止没有图片时报错
           if (item.mini_pic.length === 0) {
             item.mini_pic[0] =
-              "http://192.168.3.3/mallshop/assets/img/not-pic.png";
+              "http://106.13.184.92/mallshop/assets/img/no-pic.jpeg";
           }
           return item;
         })
@@ -110,7 +110,8 @@ export default {
   },
   methods: {
     loadMore() {
-      if (this.loading) {
+      if (this.loading || this.container_favorite.length !== 0) {
+        this.loading = true;
         return;
       }
       this.loading = true;

@@ -1,6 +1,3 @@
-let baseURL = null
-process.env.NODE_ENV ? baseURL = '/api' : baseURL = ''
-console.log(process.env.NODE_ENV)
 export default {
     baseURL: "/api",
     test: '/test',

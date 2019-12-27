@@ -1,5 +1,5 @@
 <template>
-  <div class="form">
+  <div :class="['form',{'transform':onload}]">
     <mt-header title="我的订单">
       <router-link to="/" slot="left">
         <mt-button icon="back">返回</mt-button>
@@ -54,8 +54,12 @@ export default {
   data() {
     return {
       selected: "1",
-      list: [1, 2]
+      list: [1, 2],
+      onload: true
     };
+  },
+  mounted() {
+    this.onload = false;
   }
 };
 </script>
@@ -97,6 +101,11 @@ export default {
   background-color: rgb(199, 199, 199);
   padding: 0;
   margin-bottom: 55px;
+  transition: all 0.3s linear;
+}
+.transform {
+  transform: scale(0.92);
+  background-color: red;
 }
 .mint-navbar {
   margin-bottom: 10px;

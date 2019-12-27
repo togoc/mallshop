@@ -35,6 +35,15 @@ export default (ajax) => {
                 duration: 1500
             });
         }
+        //
+        if (status === 201 && data.message) {
+            start();
+            Toast({
+                message: data.message,
+                position: "top",
+                duration: 1500
+            });
+        }
         // 拦截返回带token
         if (status === 200 && data.token) {
             localStorage.setItem('mallshoptoken', data.token)

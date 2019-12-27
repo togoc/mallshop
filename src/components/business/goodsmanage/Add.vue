@@ -127,6 +127,8 @@
 
 <script>
 import editPic from "../../../editPic";
+import { Indicator } from "mint-ui";
+import { Toast } from "mint-ui";
 import { postFile, postGoods, deletePic } from "../../../http";
 export default {
   data() {
@@ -140,7 +142,8 @@ export default {
         type: "我我     1      ",
         count: "11",
         maxBuy: "22",
-        postage: "33"
+        postage: "33",
+        style: ["小", "中", "大"]
       },
       mini_pic_list: [],
       detail_pic_list: [],
@@ -156,6 +159,12 @@ export default {
   watch: {
     progress(n, o) {
       if (n >= 100) {
+        Indicator.close();
+        Toast({
+          message: "保存成功",
+          position: "top",
+          duration: 1500
+        });
         this.progress = 0;
       }
     }
@@ -234,6 +243,7 @@ export default {
       obj.count = Number(String(this.goods.count).replace(/\s*/gi, ""));
       obj.maxBuy = Number(String(this.goods.maxBuy).replace(/\s*/gi, ""));
       obj.postage = Number(String(this.goods.postage).replace(/\s*/gi, ""));
+      obj.style = this.goods.style;
       if (this.goods._id) {
         obj._id = this.goods._id;
       }
@@ -244,6 +254,18 @@ export default {
       let avg = 100 / length;
 
       postGoods(obj).then(res => {
+        if (
+          this.blob_mini_pic_list.length === 0 &&
+          this.blob_detail_pic_list.length === 0
+        ) {
+          Indicator.close();
+          Toast({
+            message: "保存成功",
+            position: "top",
+            duration: 1500
+          });
+        }
+
         this.blob_mini_pic_list.forEach((item, index) => {
           let fd = new FormData();
           fd.append("mallshop", item);

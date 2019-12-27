@@ -14,9 +14,7 @@ export default {
   },
   mounted() {},
   watch: {
-    // $route(to, from) {
-    //   console.log(to.path);
-    // }
+
   },
   computed: {
     isBusiness() {
