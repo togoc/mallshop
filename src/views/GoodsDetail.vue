@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import { getGoodsItem } from "../http";
 export default {
   data() {
     return {
@@ -85,6 +86,7 @@ export default {
           }
         }
       ],
+      webItem: { price: 0 },
       goods: {
         selectStyle: "黑色",
         num: 1
@@ -97,7 +99,9 @@ export default {
       this.goods.selectStyle = str;
     },
     add() {
-      let goods = { ...this.goods, ...this.item };
+      let buyuid = this.$store.state.user.id;
+      console.log(buyuid)
+      let goods = { ...this.goods, ...this.item, buyuid };
       let length = 0;
       if (this.$store.state.shopCar.length === 0) {
         this.$store.state.shopCar.push(goods);
@@ -117,17 +121,39 @@ export default {
           this.$store.state.shopCar.push(goods);
         }
       }
+      //保存购物车(暂时放在localStorage)
+      localStorage.setItem(
+        "shopCarList",
+        JSON.stringify(this.$store.state.shopCar)
+      );
     }
   },
   computed: {
     detail_pic() {
-      return this.$route.query.item.detail_pic;
+      if (typeof this.$route.query.item === "object") {
+        return this.$route.query.item.detail_pic;
+      } else {
+        return this.webItem.detail_pic;
+      }
     },
     item() {
-      return this.$route.query.item;
+      if (typeof this.$route.query.item === "object") {
+        return this.$route.query.item;
+      } else {
+        return this.webItem;
+      }
     }
   },
-  created() {},
+  created() {
+    if (typeof this.$route.query.item === "string") {
+      let { id } = this.$route.params;
+      getGoodsItem(id)
+        .then(res => {
+          this.webItem = res.data;
+        })
+        .catch(err => console.log(err));
+    }
+  },
   mounted() {
     this.small = true;
   }

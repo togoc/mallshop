@@ -22,7 +22,7 @@ export const signUp = (user) => {
 }
 
 export const addBuyList = (list) => {
-    return ajax.post(apis.addBuyList, {...list })
+    return ajax.post(apis.addBuyList, list)
 }
 
 export const postGoods = (list) => {
@@ -41,6 +41,9 @@ export const getManageList = (type = "business", page) => {
     return ajax.post(apis.getManageList, { type, index: page })
 }
 
+export const getGoodsItem = (id) => {
+    return ajax.get(apis.getItem + '?id=' + id)
+}
 
 
 

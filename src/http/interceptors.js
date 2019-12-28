@@ -59,14 +59,14 @@ export default (ajax) => {
         let { data, status } = error.response
         if (status === 401) {
             Toast({
-                message: data.message ? data.message : "身份验证失败,请重新登陆!",
+                message: data.message || "身份验证失败,请重新登陆!",
                 position: "top",
                 duration: 1500
             });
         }
         if (status === 500) {
             Toast({
-                message: data.message ? data.message : '服务器请求错误',
+                message: data.message || '服务器请求错误',
                 position: "top",
                 duration: 1500
             });

@@ -39,7 +39,7 @@
             <div class="list_item_name_price">
               <i @click="delitem(item)" class="iconfont icon-delete delitem"></i>
               <span class="list_item_name">{{item.name}}</span>
-              <span class="list_item_price">￥{{item.price.toFixed(2)}}</span>
+              <span class="list_item_price">￥{{(item.num*item.price).toFixed(2)}}</span>
             </div>
             <div class="list_item_num">
               <button @click="item.num>0?item.num--:''">-</button>
@@ -82,6 +82,10 @@ export default {
     clearShop() {
       console.log("clear");
       this.$store.state.shopCar = [];
+      localStorage.setItem(
+        "shopCarList",
+        JSON.stringify(this.$store.state.shopCar)
+      );
     },
     delitem(listItem) {
       this.$store.state.shopCar.map((item, index) => {
@@ -92,22 +96,36 @@ export default {
           this.$store.state.shopCar.splice(index, 1);
         }
       });
+      localStorage.setItem(
+        "shopCarList",
+        JSON.stringify(this.$store.state.shopCar)
+      );
     },
     pay() {
-      // this.$store.state.shopCar.map((item, index) => {
-      //   if (item.num === 0) {
-      //     this.$store.state.shopCar.splice(index, 1);
-      //   }
-      //   return item;
-      // });
-      // addBuyList(this.$store.state.shopCar)
-      //   .then(res => {
-      //     console.log(res);
-      //   })
-      //   .catch(err => console.log(err));
+      this.$store.state.shopCar.map((item, index) => {
+        if (item.num === 0) {
+          this.$store.state.shopCar.splice(index, 1);
+        }
+        return item;
+      });
+      let length = 0;
+      addBuyList(this.$store.state.shopCar)
+        .then(res => {
+          if (res.status === 200) {
+            this.$router.push({
+              path: "/form"
+            });
+          }
+        })
+        .catch(err => console.log(err));
     }
   },
-  mounted() {}
+  created() {
+    if (this.$store.state.shopCar.length === 0) {
+      this.$store.state.shopCar =
+        JSON.parse(localStorage.getItem("shopCarList")) || [];
+    }
+  }
 };
 </script>
 
@@ -207,7 +225,7 @@ export default {
   font-size: 0.8em;
   margin-right: 8%;
 }
-.clear >span{
+.clear > span {
   font-weight: bold;
 }
 .shop_detail {

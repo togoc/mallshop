@@ -8,4 +8,5 @@ export default {
     postGoods: '/mallshop/addgoods',
     getManageList: '/mallshop/manageList',
     deletePic: '/mallshop/deletePic',
+    getItem: '/mallshop/goodsitem'
 }

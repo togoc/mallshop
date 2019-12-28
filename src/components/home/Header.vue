@@ -56,7 +56,6 @@ export default {
           this.small = true;
         }
         if (winScroll < 35) {
-          console.log(1);
           this.small = false;
         }
       };
