@@ -8,37 +8,18 @@
     </div>
     <div class="shop_list">
       <p>热销</p>
-      <div
-        class="home_container_favorite"
-        v-infinite-scroll="loadMore"
-        :infinite-scroll-disabled="loading"
-        infinite-scroll-distance="10"
-      >
-        <StoreItem
-          class="shop_list_item_container"
-          v-for="(item, index) in shop_list"
-          :item="item"
-          :key="index"
-        />
-        <div class="container_loading">
-          <mt-spinner type="triple-bounce"></mt-spinner>
-        </div>
-      </div>
+      <StoreItem
+        class="shop_list_item_container"
+        v-for="(item, index) in shop_list"
+        :item="item"
+        :key="index"
+      />
     </div>
   </div>
 </template>
 
 
 <script>
-//        detail:'',
-//       name: "我们",
-//       state: "out",
-//       price: "123",
-//       cut: "321",
-//       type: "我我     1      ",
-//       count: "11",
-//       maxBuy: "22",
-//       postage: "33"
 import SoldItem from "./SoldItem";
 import StoreItem from "./StoreItem";
 import { mapState } from "vuex";

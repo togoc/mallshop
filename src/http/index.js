@@ -44,8 +44,12 @@ export const getManageList = (type = "business", page) => {
 export const getGoodsItem = (id) => {
     return ajax.get(apis.getItem + '?id=' + id)
 }
-
-
+export const getBuyList = () => {
+    return ajax.get(apis.getBuyList)
+}
+export const editBuyList = (body) => {
+    return ajax.post(apis.editBuyList, body)
+}
 
 // export const test1 = () => {
 //     return ajax.get('/mallshop/test')

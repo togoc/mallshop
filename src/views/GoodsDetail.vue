@@ -62,33 +62,14 @@
 
 <script>
 import { getGoodsItem } from "../http";
+import Bus from "../bus";
 export default {
   data() {
     return {
       small: false,
-      actions: [
-        {
-          name: "黑色",
-          method: () => {
-            this.select("黑色");
-          }
-        },
-        {
-          name: "黄色",
-          method: () => {
-            this.select("黄色");
-          }
-        },
-        {
-          name: "金色",
-          method: () => {
-            this.select("金色");
-          }
-        }
-      ],
       webItem: { price: 0 },
       goods: {
-        selectStyle: "黑色",
+        selectStyle: "",
         num: 1
       },
       sheetVisible: false
@@ -99,36 +80,24 @@ export default {
       this.goods.selectStyle = str;
     },
     add() {
-      let buyuid = this.$store.state.user.id;
-      console.log(buyuid)
-      let goods = { ...this.goods, ...this.item, buyuid };
-      let length = 0;
-      if (this.$store.state.shopCar.length === 0) {
-        this.$store.state.shopCar.push(goods);
-      } else {
-        this.$store.state.shopCar.map(item => {
-          if (
-            item._id === goods._id &&
-            item.selectStyle === goods.selectStyle
-          ) {
-            item.num += goods.num;
-          } else {
-            length++;
-          }
-          return item;
-        });
-        if (length === this.$store.state.shopCar.length) {
-          this.$store.state.shopCar.push(goods);
-        }
-      }
-      //保存购物车(暂时放在localStorage)
-      localStorage.setItem(
-        "shopCarList",
-        JSON.stringify(this.$store.state.shopCar)
-      );
+      let goods = { ...this.goods, ...this.item };
+      Bus.$emit("addShopCar", goods);
     }
   },
   computed: {
+    actions() {
+      if (!this.item.style) return;
+      let arr = this.item.style.map(item => {
+        return {
+          name: item,
+          method: () => {
+            this.select(item);
+          }
+        };
+      });
+      arr[0].method();
+      return arr;
+    },
     detail_pic() {
       if (typeof this.$route.query.item === "object") {
         return this.$route.query.item.detail_pic;
@@ -153,6 +122,7 @@ export default {
         })
         .catch(err => console.log(err));
     }
+    console.log();
   },
   mounted() {
     this.small = true;

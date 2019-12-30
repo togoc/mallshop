@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home'
 import NotFound from '../views/NotFound'
 import Login from '../components/user/Login'
-import Setting from '../components/user/Setting'
-import Store from '../components/store/Store'
-import HomeContainer from '../components/home/Container'
-import BusinessIndex from '../views/BusinessIndex'
-import GoodsDetail from '../views/GoodsDetail'
-import Business from '../components/business/Business'
-import Add from '../components/business/goodsmanage/Add'
-import Form from '../views/Form'
+// import Home from '../views/Home'
+// import Setting from '../components/user/Setting'
+// import Store from '../components/store/Store'
+// import HomeContainer from '../components/home/Container'
+// import BusinessIndex from '../views/BusinessIndex'
+// import GoodsDetail from '../views/GoodsDetail'
+// import Business from '../components/business/Business'
+// import Form from '../views/Form'
+// import Add from '../components/business/goodsmanage/Add'
 import jwt from "jwt-decode";
 Vue.use(VueRouter)
 
@@ -21,11 +21,23 @@ const routes = [{
         redirect: '/home'
     }, {
         path: '/home',
-        component: Home,
-        children: [
-            { path: '', component: HomeContainer },
-            { path: '/home/goodsdetail/:id', component: GoodsDetail },
-            { path: '/home/store', component: Store }
+        component: () =>
+            import ('../views/Home'),
+        children: [{
+                path: '',
+                component: () =>
+                    import ('../components/home/Container')
+            },
+            {
+                path: '/home/goodsdetail/:id',
+                component: () =>
+                    import ('../views/GoodsDetail')
+            },
+            {
+                path: '/home/store',
+                component: () =>
+                    import ('../components/store/Store')
+            }
         ]
     },
     {
@@ -34,17 +46,27 @@ const routes = [{
     },
     {
         path: '/form',
-        component: Form
+        component: () =>
+            import ('../views/Form')
     },
     {
         path: '/setting',
-        component: Setting
+        component: () =>
+            import ('../components/user/Setting')
     }, {
         path: '/business',
-        component: BusinessIndex,
-        children: [
-            { path: '', component: Business },
-            { path: '/business/add', component: Add }
+        component: () =>
+            import ('../views/BusinessIndex'),
+        children: [{
+                path: '',
+                component: () =>
+                    import ('../components/business/Business')
+            },
+            {
+                path: '/business/add',
+                component: () =>
+                    import ('../components/business/goodsmanage/Add')
+            }
         ]
     },
     {

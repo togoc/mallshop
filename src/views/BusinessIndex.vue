@@ -1,5 +1,5 @@
 <template>
-  <div :class="['bs',{'transform':onload}]">
+  <div>
     <router-view></router-view>
   </div>
 </template>
@@ -14,18 +14,9 @@ export default {
   mounted() {
     this.onload = false;
   },
-  created(){
-    console.log(1)
-  }
+  created() {}
 };
 </script>
 
 <style scoped>
-.bs{
-  transition: all 3s linear;
-}
-.transform {
-  transform: scale(0.92);
-  background-color: red;
-}
 </style>

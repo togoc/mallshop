@@ -38,7 +38,7 @@
           <div class="list_item" v-for="(item, index) in this.$store.state.shopCar" :key="index">
             <div class="list_item_name_price">
               <i @click="delitem(item)" class="iconfont icon-delete delitem"></i>
-              <span class="list_item_name">{{item.name}}</span>
+              <span class="list_item_name">{{item.name}}{{ '('+item.selectStyle+')'}}</span>
               <span class="list_item_price">￥{{(item.num*item.price).toFixed(2)}}</span>
             </div>
             <div class="list_item_num">
@@ -62,12 +62,12 @@ import { addBuyList } from "../../http";
 export default {
   computed: {
     allnum() {
-      let num = 0;
+      let sum = 0;
       this.$store.state.shopCar.map(item => {
-        num += item.price * item.num;
+        sum += item.price * item.num;
         return item;
       });
-      return num;
+      return sum;
     }
   },
   data() {
@@ -108,10 +108,13 @@ export default {
         }
         return item;
       });
+      if (this.$store.state.shopCar.length === 0) return;
       let length = 0;
       addBuyList(this.$store.state.shopCar)
         .then(res => {
           if (res.status === 200) {
+            localStorage.removeItem("shopCarList");
+            this.$store.state.shopCar = [];
             this.$router.push({
               path: "/form"
             });

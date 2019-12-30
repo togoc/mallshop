@@ -20,7 +20,7 @@
       </router-link>
       <div class="shop_recommend_item_detail_price">
         <span>￥{{(item.price).toFixed(2)}}</span>
-        <mt-button class="add_pic_btn" type="primary">+</mt-button>
+        <mt-button class="add_pic_btn" type="primary" @click="add(item)">+</mt-button>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
 
 
 <script>
-
+import Bus from "../../bus";
 export default {
   props: {
     item: Object
@@ -43,6 +43,14 @@ export default {
     sub_log(val) {
       console.log("sub_log", val);
       this.$refs.target_1.collapse();
+    },
+    add(item) {
+      let goods = {
+        ...item,
+        num: 1,
+        selectStyle: item.style[0] || "默认"
+      };
+      Bus.$emit("addShopCar", goods);
     }
   }
 };

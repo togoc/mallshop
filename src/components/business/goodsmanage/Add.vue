@@ -54,12 +54,14 @@
       <div class="detail">
         <mt-field
           label="商品名称"
+          type="text"
           :state="(/[\u4E00-\u9FA5]+/g).test(goods.name)?'success':'error'"
           placeholder="请输入商品名称"
           v-model="goods.name"
         ></mt-field>
         <mt-field
           label="商品详情"
+          type="textarea"
           :state="(/[\u4E00-\u9FA5]+/g).test(goods.detail)?'success':'error'"
           placeholder="请输入商品详情"
           v-model="goods.detail"
@@ -67,34 +69,40 @@
         <mt-field
           label="出售价格/元"
           placeholder="请输入价格"
+          type="number"
           :state="(/\d|\s/ig.test(goods.price))?'success':'error'"
           v-model="goods.price"
         ></mt-field>
         <mt-field
+          type="number"
           label="优惠券/元"
           placeholder="请输入价格"
           :state="(/\d/ig.test(goods.cut))?'success':'error'"
           v-model="goods.cut"
         ></mt-field>
         <mt-field
+          type="text"
           label="所属分类"
           :state="(/[\u4E00-\u9FA5]+/g).test(goods.type)?'success':'error'"
           placeholder="请输入分类"
           v-model="goods.type"
         ></mt-field>
         <mt-field
+          type="number"
           label="库存数量/个"
           :state="(/\d/ig.test(goods.count))?'success':'error'"
           placeholder="请输入数量"
           v-model="goods.count"
         ></mt-field>
         <mt-field
+          type="number"
           label="商品限购/个"
           :state="(/\d/g.test(goods.maxBuy))?'success':'error'"
           placeholder="请输入数量"
           v-model="goods.maxBuy"
         ></mt-field>
         <mt-field
+          type="number"
           label="配送费/元"
           :state="(/\d/g.test(goods.postage))?'success':'error'"
           placeholder="请输入价格"
@@ -134,15 +142,16 @@ export default {
   data() {
     return {
       goods: {
-        name: "我们",
+        name: "鸡翅0号",
         state: "out",
-        detail: "详细介绍",
-        price: "123",
-        cut: "321",
-        type: "我我     1      ",
-        count: "11",
-        maxBuy: "22",
-        postage: "33",
+        detail:
+          "鸡翅又名鸡翼、大转弯，肉少、皮富胶质，又分“鸡膀”“膀尖”两种。鸡膀，连接鸡体至鸡翅的第一关节处，肉质较多；鸡翅有温中益气、补精添髓、强腰健胃等功效，鸡中翅相对翅尖和翅根来说，它的胶原蛋白含量丰富，对于保持皮肤光泽、增强皮肤弹性均有好处。",
+        price: "55",
+        cut: "1",
+        type: "美味的食物",
+        count: "5",
+        maxBuy: "2",
+        postage: "5",
         style: ["小", "中", "大"]
       },
       mini_pic_list: [],
@@ -405,12 +414,17 @@ export default {
 .progress {
   height: 10px;
   width: 100%;
+  transition: all 0.5s linear;
   display: flex;
   flex-direction: column;
 }
 .mt-progress {
   width: 100%;
+  transition: all 0.5s linear;
   height: 22px;
+}
+.mt-progress-progress {
+  transition: all 0.5s linear;
 }
 image[lazy="loading"] {
   width: 40px;

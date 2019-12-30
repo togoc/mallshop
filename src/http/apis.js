@@ -1,5 +1,6 @@
+// baseURL: "/api",
 export default {
-    baseURL: "/api",
+    baseURL: "http://106.13.184.92",
     test: '/test',
     signIn: '/login',
     signUp: '/register',
@@ -8,5 +9,7 @@ export default {
     postGoods: '/mallshop/addgoods',
     getManageList: '/mallshop/manageList',
     deletePic: '/mallshop/deletePic',
-    getItem: '/mallshop/goodsitem'
+    getItem: '/mallshop/goodsitem',
+    getBuyList: '/mallshop/getbuylist',
+    editBuyList: '/mallshop/editbuylist'
 }

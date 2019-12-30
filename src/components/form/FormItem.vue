@@ -1,33 +1,36 @@
 <template>
-  <div class="form_item">
+  <div :class="['form_item',{'soldout':item.num>item.count}]">
     <div class="form_item_time">
-      <p>订单编号:1232131231231</p>
-      <span>下单时间:2016-05-05 15:23:31</span>
+      <p>订单编号:{{item._id}}</p>
+      <span>下单时间:{{this.$moment(item.date).format('YYYY-MM-DD HH:mm:ss')}}</span>
     </div>
     <div class="form_item_detail">
       <div class="form_item_img">
-        <img src="../home/images/favorite.png" alt="图片" />
+        <img :src="item.mini_pic[0]" alt="图片" />
       </div>
       <div class="form_item_name">
         <div class="form_item_name_detail">
-          <p>蓝月亮蓝月亮蓝月亮蓝月亮蓝月亮fadd蓝月亮</p>
+          <p>{{item.name}}</p>
         </div>
-        <span>备注111111111111111111111111111111ddddddd1111111</span>
+        <span>{{item.selectStyle}}</span>
       </div>
       <div class="form_item_price_count">
-        <p>￥1990.00</p>
-        <span>1</span>
+        <p>
+          ￥
+          <i>{{typeof item.price ?(item.price).toFixed(2):item.price}}</i>
+        </p>
+        <span>×{{item.num}}</span>
       </div>
     </div>
     <div class="form_item_edit">
       <div class="form_item_last_price">
         <p>
           订单总额:
-          <span>￥1990.00</span>
+          <span>￥{{(item.num*item.price).toFixed(2)}}</span>
         </p>
       </div>
       <div class="form_item_edit_item">
-        <mt-button size="small" type="danger">取消订单</mt-button>
+        <mt-button size="small" type="danger" :disabled="item.state!==0" @click="cancel(item)">取消订单</mt-button>
       </div>
     </div>
   </div>
@@ -35,9 +38,14 @@
 
 <script>
 export default {
+  props: {
+    item: Object,
+    cancel: Function
+  },
   data() {
     return {};
-  }
+  },
+  methods: {}
 };
 </script>
 
@@ -80,6 +88,10 @@ export default {
   width: 100%;
   flex-direction: row;
   align-items: center;
+  font-weight: bold;
+}
+.form_item_last_price span {
+  color: red;
 }
 .form_item_name {
   flex: 1 1 auto;
@@ -115,6 +127,10 @@ export default {
   justify-content: center;
   align-items: center;
 }
+.form_item_price_count {
+  color: red;
+  font-weight: bold;
+}
 
 .form_item_img {
   flex: 1 1 auto;
@@ -130,11 +146,16 @@ export default {
 }
 
 .form_item {
-  border: 2px solid #eaeaea;
+  border: 2px solid #fff;
   height: 205px;
   background-color: rgb(231, 231, 231);
   box-sizing: border-box;
   margin-top: 10px;
+  box-shadow: 0 0 5px #888;
+  width: 100%;
+}
+.sold_out {
+  opacity: 0.5;
 }
 .form_item:first-child {
   margin-top: 0px;

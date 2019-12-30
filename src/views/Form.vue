@@ -16,95 +16,92 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <FormItem v-for="(item, index) in list" :key="index" />
+        <State0 :state="state0" :getBuyList="getBuyList" />
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <p>已付款</p>
+        <State1 :state="state1" />
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <p>已完成</p>
+        <State2 :state="state2" />
       </mt-tab-container-item>
       <mt-tab-container-item id="4">
-        <p>已取消</p>
+        <State3 :state="state3" />
       </mt-tab-container-item>
     </mt-tab-container>
-
-    <!-- footer -->
-    <div class="confirm_pay">
-      <div class="confirm_pay_price">
-        <span>
-          ￥
-          <i>{{(999).toFixed(2)}}</i>
-        </span>
-      </div>
-      <div class="confirm_pay_edit">
-        <mt-button size="small" type="danger">取消订单</mt-button>
-        <mt-button class="pay" size="small" type="primary">确认付款</mt-button>
-      </div>
-    </div>
   </div>
 </template>
-
 <script>
 import FormItem from "../components/form/FormItem";
 export default {
   components: {
-    FormItem
+    State0: () => import("../components/form/State0"),
+    State1: () => import("../components/form/State1"),
+    State2: () => import("../components/form/State2"),
+    State3: () => import("../components/form/State3")
   },
   data() {
     return {
       selected: "1",
-      list: [1, 2],
-      onload: true
+      onload: true,
+      formList: []
     };
+  },
+  computed: {
+    state0() {
+      return (
+        this.formList.filter(item => {
+          if (item.state === 0) return item;
+        }) || []
+      );
+    },
+    state1() {
+      return (
+        this.formList.filter(item => {
+          if (item.state === 1) return item;
+        }) || []
+      );
+    },
+    state2() {
+      return (
+        this.formList.filter(item => {
+          if (item.state === 2) return item;
+        }) || []
+      );
+    },
+    state3() {
+      return (
+        this.formList.filter(item => {
+          if (item.state === 3) return item;
+        }) || []
+      );
+    }
+  },
+  created() {
+    this.getBuyList();
   },
   mounted() {
     this.onload = false;
+  },
+  methods: {
+    getBuyList() {
+      this.$http.getBuyList().then(res => {
+        this.formList = res.data || [];
+      });
+    }
   }
 };
 </script>
 
 
 <style scoped>
-.confirm_pay_edit {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-}
-.confirm_pay_price {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  flex-direction: row;
-  width: 100%;
-}
-.confirm_pay_price i {
-  font-size: 1.5em;
-}
-.confirm_pay {
-  flex-direction: row;
-  display: flex;
-  background-color: rgb(160, 63, 63);
-  justify-content: center;
-  height: 55px;
-  /* background-color: red; */
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-}
 .form {
   margin: 0;
-  background-color: rgb(199, 199, 199);
   padding: 0;
   margin-bottom: 55px;
   transition: all 0.3s linear;
 }
 .transform {
-  transform: scale(0.92);
+  transform: scale(0.95);
   background-color: red;
 }
 .mint-navbar {
@@ -120,5 +117,8 @@ export default {
 .mint-header {
   height: 55px;
   background-color: red;
+}
+.mint-tab-container {
+  overflow: unset;
 }
 </style>

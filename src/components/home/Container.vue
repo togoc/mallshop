@@ -112,6 +112,7 @@ export default {
     loadMore() {
       if (this.loading || this.container_favorite.length !== 0) {
         this.loading = true;
+        this.end = true;
         return;
       }
       this.loading = true;

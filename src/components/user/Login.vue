@@ -18,13 +18,7 @@
           :state="(name.length>=3&&name.length<=8)?'success':'error'"
           v-model="name"
         ></mt-field>
-        <mt-field
-          label="邮箱"
-          placeholder="请输入邮箱"
-          state="success"
-          type="email"
-          v-model="email"
-        ></mt-field>
+        <mt-field label="邮箱" placeholder="请输入邮箱" state="success" type="email" v-model="email"></mt-field>
         <mt-field
           label="密码"
           :state="(password.length>=3&&password.length<=15)?'success':'error'"
@@ -59,6 +53,7 @@
           type="password"
           v-model="password"
         ></mt-field>
+        <mt-radio title="用户类型" v-model="identity" :options="options"></mt-radio>
         <mt-field class="check" label="验证码" state="warning" v-model="captcha"></mt-field>
         <div id="v_container"></div>
         <div class="login_register">
@@ -77,10 +72,14 @@ export default {
   data() {
     return {
       selected: "1",
-      name: "togoc",
-      email: "309128090@qq.com",
+      name: "togo",
+      email: "30912809@qq.com",
       password: "1111",
       identity: "normal", //business
+      options: [
+        { label: "普通用户", value: "normal" },
+        { label: "商家用户", value: "business" }
+      ],
       captcha: ""
     };
   },
@@ -106,11 +105,6 @@ export default {
     this.verifyCode = new gVerify("v_container");
   },
   methods: {
-    // selected: "1",
-    // name: "togoc",
-    // email: "309128090@qq.com",
-    // password: "1111",
-    // identity: "normal", //business
     signIn() {
       new Promise((rs, rj) => {
         this.$store.dispatch("signIn", {
@@ -126,13 +120,8 @@ export default {
     },
     signUp() {
       if (this.verifyCode.validate(this.captcha)) {
-        this.$store.dispatch("signUp", {
-          name: "togoc",
-          email: "309128090@qq.com",
-          password: "1111",
-          identity: "normal" //business
-        });
-        // alert("验证码正确");
+        let { name, email, password, identity } = this;
+        this.$store.dispatch("signUp", { name, email, password, identity });
       } else {
         Toast({
           message: "验证码错误",
