@@ -52,7 +52,7 @@ export default {
       container_nav_list: [
         {
           img_url: "./images/sn.png",
-          link_url: "/home/store",
+          link_url: "/home/store/苏宁易购",
           list_name: "苏宁易购"
         },
         {

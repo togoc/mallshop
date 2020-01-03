@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div :class="['home',{'store':isStore}]">
     <Header :name="name"></Header>
     <router-view></router-view>
     <ShopCar class="shop_car" />
@@ -11,7 +11,6 @@
 import Header from "../components/home/Header";
 import ShopCar from "../components/home/ShopCar";
 import Bus from "../bus";
-import jwt from "jwt-decode";
 import { mapState } from "vuex";
 export default {
   data() {
@@ -33,7 +32,9 @@ export default {
     setUser() {
       let isLogin = localStorage.getItem("mallshoptoken") ? true : false;
       if (isLogin) {
-        this.$store.state.user = jwt(localStorage.getItem("mallshoptoken"));
+        this.$store.state.user = this.$jwt(
+          localStorage.getItem("mallshoptoken")
+        );
       }
     },
     add(select) {
@@ -70,7 +71,10 @@ export default {
     ...mapState({
       name: state => state.user.name,
       identity: state => state.user.identity
-    })
+    }),
+    isStore() {
+      return this.$route.path.indexOf("/home/store/") !== -1;
+    }
   }
 };
 </script>
@@ -80,6 +84,10 @@ export default {
 <style scoped>
 .home {
   margin-top: 90px;
+  transition: all 0.3s linear;
+}
+.store {
+  margin-top: 55px;
 }
 </style>
 

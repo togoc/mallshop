@@ -34,7 +34,7 @@ const routes = [{
                     import ('../views/GoodsDetail')
             },
             {
-                path: '/home/store',
+                path: '/home/store/:id',
                 component: () =>
                     import ('../components/store/Store')
             }

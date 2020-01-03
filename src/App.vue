@@ -13,9 +13,7 @@ export default {
     return {};
   },
   mounted() {},
-  watch: {
-
-  },
+  watch: {},
   computed: {
     isBusiness() {
       let { identity } = this.$store.state.user;

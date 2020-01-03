@@ -1,6 +1,6 @@
-// baseURL: "/api",
+// baseURL: "http://106.13.184.92",
 export default {
-    baseURL: "http://106.13.184.92",
+    baseURL: "/api",
     test: '/test',
     signIn: '/login',
     signUp: '/register',

@@ -1,5 +1,5 @@
 const debug = process.env.NODE_ENV !== 'production'
-
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
 module.exports = {
     outputDir: '../public', // 构建输出目录
     assetsDir: 'assets', // 静态资源目录 (js, css, img, fonts)
@@ -10,7 +10,18 @@ module.exports = {
     productionSourceMap: true, // 是否在构建生产包时生成 sourceMap 文件，false将提高构建速度
     configureWebpack: config => { // webpack配置，值位对象时会合并配置，为方法时会改写配置
         if (debug) { // 开发环境配置
-            config.devtool = 'cheap-module-eval-source-map'
+            return {
+                plugins: [
+                    new CompressionWebpackPlugin({
+                        filename: '[path].gz[query]',
+                        algorithm: 'gzip',
+                        test: /\.js$|\.json$|\.css/,
+                        threshold: 0, // 只有大小大于该值的资源会被处理
+                        minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
+                        deleteOriginalAssets: false // 删除原文件
+                    })
+                ],
+            }
         } else { // 生产环境配置
 
         }
