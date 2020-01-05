@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="state0">
     <FormItem v-for="(item, index) in state" :cancel="cancel" :item="item" :key="index" />
     <div class="confirm_pay">
       <div class="confirm_pay_price">
@@ -9,8 +9,19 @@
         </span>
       </div>
       <div class="confirm_pay_edit">
-        <mt-button size="small" type="danger" @click="cancel(state)">取消订单</mt-button>
-        <mt-button class="pay" size="small" type="primary">确认付款</mt-button>
+        <mt-button
+          size="small"
+          type="danger"
+          :disabled="state.length ===0"
+          @click="cancel(state)"
+        >取消订单</mt-button>
+        <mt-button
+          class="pay"
+          size="small"
+          @click="pay"
+          :disabled="state.length ===0"
+          type="primary"
+        >确认付款</mt-button>
       </div>
     </div>
   </div>
@@ -23,6 +34,7 @@ import FormItem from "./FormItem";
 export default {
   props: {
     state: Array,
+    cancel: Function,
     getBuyList: Function
   },
   data() {
@@ -42,24 +54,12 @@ export default {
     FormItem
   },
   methods: {
-    cancel(state) {
-      let arr = [];
-      if (Array.isArray(state)) {
-        state.map(item => {
-          arr.push({ _id: item._id });
-          return item;
-        });
-      } else {
-        arr.push(state);
-      }
-      this.$http
-        .editBuyList({
-          type: "cancel",
-          query: arr
-        })
-        .then(res => {
+    pay() {
+      this.$http.pay(this.state).then(res => {
+        if (res.status === 200) {
           this.getBuyList();
-        });
+        }
+      });
     }
   }
 };

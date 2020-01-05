@@ -16,19 +16,14 @@
 import FormItem from "./FormItem";
 export default {
   props: {
-    state: Array
+    state: Array,
+    cancel: Function
   },
   components: {
     FormItem
   },
-  mounted() {
-    console.log(this.state);
-  },
-  methods: {
-    cancel() {
-      console.log(1);
-    }
-  }
+  mounted() {},
+  methods: {}
 };
 </script>
 

@@ -22,7 +22,6 @@ export default {
     FormItem
   },
   mounted() {
-    console.log(this.state);
   },
   methods: {
     cancel() {

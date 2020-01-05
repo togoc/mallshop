@@ -30,7 +30,12 @@
         </p>
       </div>
       <div class="form_item_edit_item">
-        <mt-button size="small" type="danger" :disabled="item.state!==0" @click="cancel(item)">取消订单</mt-button>
+        <mt-button
+          size="small"
+          type="danger"
+          :disabled="item.state!==0&&item.state!==1"
+          @click="cancel(item)"
+        >取消订单</mt-button>
       </div>
     </div>
   </div>

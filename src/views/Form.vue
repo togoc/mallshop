@@ -7,19 +7,27 @@
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1">待付款</mt-tab-item>
-      <mt-tab-item id="2">已付款</mt-tab-item>
-      <mt-tab-item id="3">已完成</mt-tab-item>
-      <mt-tab-item id="4">已取消</mt-tab-item>
+      <mt-tab-item id="1">
+        <mt-badge size="normal" v-if="state0.length>0" type="error">{{state0.length}}</mt-badge>待付款
+      </mt-tab-item>
+      <mt-tab-item id="2">
+        <mt-badge size="normal" v-if="state1.length>0" type="error">{{state1.length}}</mt-badge>已付款
+      </mt-tab-item>
+      <mt-tab-item id="3">
+        <mt-badge size="normal" v-if="state2.length>0" type="error">{{state2.length}}</mt-badge>已完成
+      </mt-tab-item>
+      <mt-tab-item id="4">
+        <mt-badge size="normal" v-if="state3.length>0" type="error">{{state3.length}}</mt-badge>已取消
+      </mt-tab-item>
     </mt-navbar>
 
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <State0 :state="state0" :getBuyList="getBuyList" />
+        <State0 :state="state0" :cancel="cancel" :getBuyList="getBuyList" />
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <State1 :state="state1" />
+        <State1 :state="state1" :cancel="cancel" />
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
         <State2 :state="state2" />
@@ -87,6 +95,25 @@ export default {
       this.$http.getBuyList().then(res => {
         this.formList = res.data || [];
       });
+    },
+    cancel(state) {
+      let arr = [];
+      if (Array.isArray(state)) {
+        state.map(item => {
+          arr.push({ _id: item._id });
+          return item;
+        });
+      } else {
+        arr.push(state);
+      }
+      this.$http
+        .editBuyList({
+          type: "cancel",
+          query: arr
+        })
+        .then(res => {
+          this.getBuyList();
+        });
     }
   }
 };
@@ -120,5 +147,15 @@ export default {
 }
 .mint-tab-container {
   overflow: unset;
+}
+.mint-badge {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+.mint-tab-item {
+  position: relative;
 }
 </style>

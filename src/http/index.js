@@ -51,6 +51,22 @@ export const editBuyList = (body) => {
     return ajax.post(apis.editBuyList, body)
 }
 
+
+export const pay = (list) => {
+    return ajax.post(apis.pay, list)
+}
+
+
+
+
+
+
+
+
+
+
+
+
 // export const test1 = () => {
 //     return ajax.get('/mallshop/test')
 // }

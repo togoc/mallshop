@@ -11,5 +11,6 @@ export default {
     deletePic: '/mallshop/deletePic',
     getItem: '/mallshop/goodsitem',
     getBuyList: '/mallshop/getbuylist',
-    editBuyList: '/mallshop/editbuylist'
+    editBuyList: '/mallshop/editbuylist',
+    pay: '/mallshop/pay'
 }
