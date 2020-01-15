@@ -84,11 +84,11 @@ time,
 mark,
 audio,
 video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
+    margin        : 0;
+    padding       : 0;
+    border        : 0;
+    font-size     : 100%;
+    font          : inherit;
     vertical-align: baseline;
 }
 
@@ -133,13 +133,13 @@ q:after {
 
 table {
     border-collapse: collapse;
-    border-spacing: 0;
+    border-spacing : 0;
 }
 
 .search .mint-search .mint-searchbar {
-    width: 100%;
-    margin: 0;
-    border-radius: 30px;
+    width           : 100%;
+    margin          : 0;
+    border-radius   : 30px;
     background-color: red;
 }
 
@@ -155,14 +155,14 @@ table {
 /* 商家首页按钮 */
 
 .mint-tab-item-label {
-    display: flex;
-    flex-direction: column;
+    display        : flex;
+    flex-direction : column;
     justify-content: center;
-    align-items: center;
+    align-items    : center;
 }
 
 .mint-tab-item-label i {
-    height: 100%;
+    height   : 100%;
     font-size: 2.2em;
 }
 
@@ -186,3 +186,12 @@ table {
 .goods_picker_nav {
     z-index: 3334 !important;
 }
+
+html {
+    scroll-behavior: smooth;
+}
+
+.pic {
+  
+}
+

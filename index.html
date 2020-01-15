@@ -5,12 +5,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="./01.css">
+  <style>
+    div.b1 {
+      width: 100%;
+      height: 50vh;
+      background-color: #fcc;
+      font-size: 2em;
+      display: flex;
+    }
+
+    div.b11 {
+      background-color: #fff;
+      font-size: 2em;
+      width: 100%;
+
+    }
+
+    @media screen and (max-width: 350px) {
+      div.b11 {
+        font-size: 1em;
+        width: 100%;
+
+      }
+    }
+
+    div.b2 {}
+
+    div.b3 {}
+  </style>
   <title>Document</title>
 </head>
 
 <body>
-  <div class="name">1</div>
+  <div class="b1">
+    <div class="b11">11</div>
+  </div>
+  <div class="b2">1</div>
+  <div class="b3">1</div>
 </body>
+
+
+<script>
+  let arr = [{ a: 1 }, { a: 13 }, { a: 5 }]
+  arr.sort((a, b) => a.a - b.a)
+  console.log(arr)
+</script>
 
 </html>

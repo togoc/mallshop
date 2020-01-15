@@ -40,7 +40,6 @@ export default {
     add(select) {
       let buyuid = this.$store.state.user.id;
       let goods = { ...select, buyuid };
-      console.log(goods);
       let length = 0;
       if (this.$store.state.shopCar.length === 0) {
         this.$store.state.shopCar.push(goods);
@@ -85,6 +84,8 @@ export default {
 .home {
   margin-top: 90px;
   transition: all 0.3s linear;
+  overflow: hidden;
+  margin-bottom: 55px;
 }
 .store {
   margin-top: 55px;

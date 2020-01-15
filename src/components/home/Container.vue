@@ -12,28 +12,31 @@
       </router-link>
     </div>
     <div class="home_container_swipe">
-      <mt-swipe :auto="2000">
+      <mt-swipe :auto="3000">
         <mt-swipe-item v-for="(item, index) in container_swipe" :key="index">
-          <router-link :to="item.link_url" class="home_container_swipe_link">
-            <img class="home_container_swipe_img" src="./images/swipe.png" alt />
+          <router-link :to="item.navigator_url" class="home_container_swipe_link">
+            <img class="home_container_swipe_img" :src="item.image_src" alt />
           </router-link>
         </mt-swipe-item>
       </mt-swipe>
     </div>
-    <div
-      class="home_container_favorite"
-      v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="10"
-    >
-      <SoldItem
-        class="home_container_favorite_item"
-        v-for="(item, index) in container_favorite"
-        :item="item"
-        :key="index"
-      />
-      <div class="container_loading" v-if="loading&&!end">
-        <mt-spinner type="triple-bounce"></mt-spinner>
+    <!-- floor -->
+    <div class="index_cate">
+      <router-link v-for="(item, index) in cateList" :key="index" :to="item.navigator_url||''">
+        <img :src="item.image_src" />
+      </router-link>
+    </div>
+
+    <div class="index_floor">
+      <div class="floor_group" v-for="(item1, index) in floorsList" :key="index">
+        <div class="floor_group_title">
+          <img :src="item1.floor_title[0].image_src" />
+        </div>
+        <div class="floor_group_list">
+          <router-link to v-for="(item2, index) in item1.product_list" :key="index">
+            <img :src="item2.image_src" />
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -41,7 +44,12 @@
 
 <script>
 import SoldItem from "../store/SoldItem";
-import { getManageList } from "../../http";
+import {
+  getManageList,
+  getSwiperList,
+  getCateList,
+  getFloorsList
+} from "../../http";
 import { mapState } from "vuex";
 export default {
   components: {
@@ -76,20 +84,9 @@ export default {
           list_name: "苏宁易购"
         }
       ],
-      container_swipe: [
-        {
-          img_url: "./images/swipe.png",
-          link_url: "/"
-        },
-        {
-          img_url: "./images/swipe.png",
-          link_url: "/"
-        },
-        {
-          img_url: "./images/swipe.png",
-          link_url: "/"
-        }
-      ],
+      cateList: [],
+      floorsList: [],
+      container_swipe: [],
       loading: false,
       end: false,
       index: 0
@@ -108,6 +105,17 @@ export default {
         })
     })
   },
+  created() {
+    getSwiperList().then(res => {
+      this.container_swipe = res.data.message || [];
+    });
+    getCateList().then(res => {
+      this.cateList = res.data.message || [];
+    });
+    getFloorsList().then(res => {
+      this.floorsList = res.data.message || [];
+    });
+  },
   methods: {
     loadMore() {
       if (this.loading || this.container_favorite.length !== 0) {
@@ -116,17 +124,17 @@ export default {
         return;
       }
       this.loading = true;
-      getManageList("normal", this.index).then(res => {
-        this.index += 1;
-        if (!res.data.length) {
-          this.end = true;
-          return;
-        }
-        this.$store.state.normalList = this.$store.state.normalList.concat(
-          res.data
-        );
-        this.loading = false;
-      });
+      // getManageList("normal", this.index).then(res => {
+      //   this.index += 1;
+      //   if (!res.data.length) {
+      //     this.end = true;
+      //     return;
+      //   }
+      //   this.$store.state.normalList = this.$store.state.normalList.concat(
+      //     res.data
+      //   );
+      //   this.loading = false;
+      // });
     }
   }
 };
@@ -209,8 +217,8 @@ export default {
   height: 100%;
 }
 .home_container_swipe_img {
-  width: 95%;
-  height: 95%;
+  width: 100%;
+  height: 100%;
 }
 
 .home_container_nav {
@@ -235,5 +243,69 @@ export default {
 }
 .home_container_swipe {
   height: 145px;
+}
+</style>
+
+<style lang="less">
+div.home_container_swipe {
+  mt-swipe {
+    mt-swipe-item {
+      width: 100%;
+      router-link.home_container_swipe_link {
+        img.home_container_swipe_img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+div.index_cate {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  a {
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    text-align: center;
+    img {
+      width: 70%;
+      height: 70%;
+      text-align: center;
+    }
+  }
+}
+div.index_floor {
+  div.floor_group {
+    div.floor_group_title {
+      width: 100vw;
+      margin: 5px 0;
+      img {
+        width: 100%;
+      }
+    }
+
+    div.floor_group_list {
+      box-sizing: border-box;
+      a {
+        width: 33.33%;
+        box-sizing: border-box;
+        display: block;
+        float: left;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+        &:nth-last-child(-n + 4) {
+          height: 386 * 33.33vw / 232 / 2;
+          width: 33.33%;
+          border: 5px solid #fff;
+        }
+      }
+    }
+  }
 }
 </style>

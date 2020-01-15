@@ -69,9 +69,7 @@ export default {
       console.log(this.$route);
     },
     back() {
-      this.$router.push({
-        path: "/home"
-      });
+      this.$router.go(-1);
     }
   }
 };

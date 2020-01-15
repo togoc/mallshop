@@ -3,22 +3,21 @@ import apis from './apis'
 import interceptors from './interceptors'
 
 const ajax = axios.create({
-        baseURL: apis.baseURL
-    })
-    //添加拦截
+    baseURL: apis.baseURL
+})
+//添加拦截
 interceptors(ajax)
-
 
 export const test = () => {
     return ajax.get(apis.test)
 }
 
 export const signIn = (user) => {
-    return ajax.post(apis.signIn, {...user })
+    return ajax.post(apis.signIn, { ...user })
 }
 
 export const signUp = (user) => {
-    return ajax.post(apis.signUp, {...user })
+    return ajax.post(apis.signUp, { ...user })
 }
 
 export const addBuyList = (list) => {
@@ -56,13 +55,31 @@ export const pay = (list) => {
     return ajax.post(apis.pay, list)
 }
 
+//首页
+export const getSwiperList = () => {
+    return ajax.get(apis.getSwiperList)
+}
 
+export const getCateList = () => {
+    return ajax.get(apis.getCateList)
+}
 
+export const getFloorsList = () => {
+    return ajax.get(apis.getFloorsList)
+}
+//分类
+export const getCategories = () => {
+    return ajax.get(apis.getCategories)
+}
+//列表
+export const getGoodsList = (query) => {
+    return ajax.get(apis.getGoodsList + query)
+}
 
-
-
-
-
+//商品详情
+export const getGoodsDetail = (query) => {
+    return ajax.get(apis.getGoodsDetail + query)
+}
 
 
 

@@ -17,62 +17,77 @@ Vue.use(VueRouter)
 
 
 const routes = [{
-        path: '/',
-        redirect: '/home'
-    }, {
-        path: '/home',
+    path: '/',
+    redirect: '/home'
+}, {
+    path: '/home',
+    component: () =>
+        import('../views/Home'),
+    children: [{
+        path: '',
         component: () =>
-            import ('../views/Home'),
-        children: [{
-                path: '',
-                component: () =>
-                    import ('../components/home/Container')
-            },
-            {
-                path: '/home/goodsdetail/:id',
-                component: () =>
-                    import ('../views/GoodsDetail')
-            },
-            {
-                path: '/home/store/:id',
-                component: () =>
-                    import ('../components/store/Store')
-            }
-        ]
+            import('../components/home/Container')
     },
     {
-        path: '/login',
-        component: Login
+        path: '/home/goodsdetail/:id',
+        component: () =>
+            import('../views/GoodsDetail')
     },
     {
-        path: '/form',
+        path: '/home/store/:id',
         component: () =>
-            import ('../views/Form')
-    },
-    {
-        path: '/setting',
-        component: () =>
-            import ('../components/user/Setting')
-    }, {
-        path: '/business',
-        component: () =>
-            import ('../views/BusinessIndex'),
-        children: [{
-                path: '',
-                component: () =>
-                    import ('../components/business/Business')
-            },
-            {
-                path: '/business/add',
-                component: () =>
-                    import ('../components/business/goodsmanage/Add')
-            }
-        ]
-    },
-    {
-        path: '*',
-        component: NotFound
+            import('../components/store/Store')
     }
+    ]
+},
+{
+    path: '/login',
+    component: Login
+},
+{
+    path: '/form',
+    component: () =>
+        import('../views/Form')
+},
+{
+    path: '/setting',
+    component: () =>
+        import('../components/user/Setting')
+}, {
+    path: '/business',
+    component: () =>
+        import('../views/BusinessIndex'),
+    children: [{
+        path: '',
+        component: () =>
+            import('../components/business/Business')
+    },
+    {
+        path: '/business/add',
+        component: () =>
+            import('../components/business/goodsmanage/Add')
+    }
+    ]
+},
+{
+    path: '*',
+    component: NotFound
+}, {
+    path: '/categories',
+    meta: {
+        keepAlive: true
+    },
+    component: () => import('../views/Categories')
+}, {
+    path: '/goodslist',
+    component: () => import('../views/GoodsList')
+}, {
+    path: '/goodsdetail',
+    component: () => import('../views/Goods_Detail')
+}, {
+    path: '/pic',
+    component: () => import('../views/Pic')
+}
 ]
 
 const router = new VueRouter({

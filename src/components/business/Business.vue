@@ -48,15 +48,18 @@ export default {
   watch: {},
   created() {
     this.checkPath();
-
   },
   methods: {
     checkPath() {
-      if (this.$route.query.from) {
-        this.selected = this.$route.query.from;
-        this.$router.push({
-          path:'/business'
-        })
+      try {
+        if (this.$route.query.from) {
+          this.selected = this.$route.query.from;
+          this.$router.push({
+            path: "/business"
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   },

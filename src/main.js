@@ -14,6 +14,20 @@ Vue.prototype.$http = http
 Vue.prototype.$moment = moment
 Vue.prototype.$jwt = jwt
 
+// let div = document.createElement('div')
+// let img = document.createElement('img')
+// div.className = 'pic'
+// img.className = 'pic_item'
+// img.src = 'http://image4.suning.cn/uimg/b2c/newcatentries/0000000000-000000000601419061_1_400x400.jpg'
+// div.append(img)
+// document.body.append(div)
+// div.onclick = () => {
+//     div.style.display = 'none'
+//     document.body.removeChild(div)
+// }
+
+
+
 new Vue({
     router,
     store,

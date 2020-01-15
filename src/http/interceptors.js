@@ -1,5 +1,6 @@
 import { Indicator } from "mint-ui";
 import { Toast } from "mint-ui";
+let times = 0
 
 function start() {
     Indicator.open({
@@ -13,22 +14,24 @@ function end() {
 
 export default (ajax) => {
     ajax.interceptors.request.use(request => {
-            start()
-            if (localStorage.mallshoptoken) {
-                request.headers.Authorization = localStorage.mallshoptoken
-            }
-            return request
-        }, error => {
-            return Promise.reject(error)
-        })
-        // 400 （错误请求） 服务器不理解请求的语法。
-        // 401 （未授权） 请求要求身份验证。 
-        // 403 （禁止） 服务器拒绝请求。
+        start()
+        times++
+        if (localStorage.mallshoptoken) {
+            request.headers.Authorization = localStorage.mallshoptoken
+        }
+        return request
+    }, error => {
+        return Promise.reject(error)
+    })
+    // 400 （错误请求） 服务器不理解请求的语法。
+    // 401 （未授权） 请求要求身份验证。 
+    // 403 （禁止） 服务器拒绝请求。
     ajax.interceptors.response.use(response => {
-        end()
+        times--
+        if (times === 0) end()
         let { data, status } = response
         //拦截返回带message
-        if (status === 200 && data.message) {
+        if (status === 200 && !Array.isArray(data.message) && data.message) {
             Toast({
                 message: data.message,
                 position: "top",
@@ -55,7 +58,8 @@ export default (ajax) => {
         }
         return response
     }, error => {
-        end()
+        times--
+        if (times === 0) end()
         let { data, status } = error.response
         if (status === 401) {
             Toast({
