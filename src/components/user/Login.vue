@@ -72,8 +72,8 @@ export default {
   data() {
     return {
       selected: "1",
-      name: "togo",
-      email: "30912809@qq.com",
+      name: "togoc",
+      email: "309128090@qq.com",
       password: "1111",
       identity: "normal", //business
       options: [

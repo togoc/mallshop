@@ -1,7 +1,7 @@
 
 // const baseURL = "http://106.13.184.92"
 // const baseURL = "http://192.168.3.3"
-const baseURL = "/api"
+const baseURL = ""
 export default {
     baseURL,
     test: '/test',
